@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="ZH-CN">
+<head>
+	<meta charset="UTF-8">
+  <link rel="Stylesheet" type="text/css" href="style.css" />
+	<title>HTML示例文档</title>
+</head>
+<body>
+  <div class="contents">
+
+<h1 id="toc_1">HTML 示例文档</h1>
+
+<h2 id="toc_1.1">使用说明</h2>
+
+<p>
+在这个给出一份简单的html示例，包涵大多数html标签，以及其使用方法。
+网络上有很多关于html的描述，但是通常很多是把HTML4的一些特性混在了
+一起。实际上，我们只需要学会简单的HTML5标准就行。
+</p>
+
+<p>
+作为为HTML代码使用的一个参考，可以直接把这些代码拷贝到自己的项目
+中就可以。作为学习使用，主要在这个文档中找到相应的标签，这里的使用
+方法是现代所推荐的用法。也可以作为一个大家选择看书的一个标准，看
+计算机相关的书肯定得看书中代码的。代码就像是书写一篇文章，写得好的
+不仅格式优美，内容也是简洁规范，而且，对人友好。当然，作为一门标记
+语言，HTML本身也比较简单，要求不是那么严格。这里扩展一下<a href="优秀代码.html">优秀代码</a>的
+几个标准，同时也作为一个自己写程序的一个规范准则吧。
+</p>
+
+<p>
+HTML5包含很多新的特性，比如HTML视频。这些新的特效在现代的<a href="浏览器.html">浏览器</a>
+中还没有完全被实现。这些大家有兴趣可以去研究一下。
+</p>
+
+<h2 id="toc_1.2">源码</h2>
+<pre html>
+
+&lt;!DOCTYPE HTML&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;title&gt;HTML示例文档&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+ 
+
+  &lt;div id="page"&gt;
+  
+    &lt;div id="header"&gt;
+      &lt;h1&gt;标题1&lt;/h1&gt;
+      &lt;p class="p1"&gt;
+        段落，h1是标题1，从1到6，级别原来越不重要。通常，我们用h表示一个
+        标题，对段落的总结。段落是普通的文本，在大片文字内容中是主体部分。
+      &lt;/p&gt;
+      
+      &lt;ul class="navigation"&gt;
+        &lt;li&gt;
+          &lt;a href="linkto/index.html" class="test1" title="内部链接,外部打开" target="_blank"&gt;首页&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="http://localhost/" class="test2" title="title属性是鼠标点击过来时显示的提示"&gt;外部链接&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;a href="mailto:example@gmail.com" class="test3" title=""&gt;非链接&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          这里使用的主要的是链接元素的属性，头部通常有一个链接，链接到主页。title
+          属性有title和target，对于HTML5标准中，任何属性如果为空，一定要使用空双
+          引号表示。属性与属性之间需要用空格分开。
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;ol&gt;
+            &lt;li&gt;_blank -- 在新窗口中打开链接&lt;/li&gt;
+            &lt;li&gt;_parent -- 在父窗体中打开链接&lt;/li&gt;
+            &lt;li&gt;_self -- 在当前窗体打开链接,此为默认值&lt;/li&gt;
+            &lt;li&gt;其他，通常用于iframe中，不推荐&lt;/li&gt;
+          &lt;/ol&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+      
+    &lt;/div&gt;
+    
+    &lt;div id="main"&gt;
+    
+    &lt;/div&gt;
+    
+    &lt;div id="footer"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+
+</body>
+</html>
