@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="ZH-CN">
+<head>
+	<meta charset="UTF-8">
+  <link rel="Stylesheet" type="text/css" href="style.css" />
+	<title>css中ie的bug集合</title>
+</head>
+<body>
+  <div class="contents">
+
+<h2 id="toc_0.1">ie 6 7中的overflow:hidden无效bug</h2>
+
+<p>
+这个bug在作slide动画时候经常会遇到，第一次遇到时被ie给被这个效果吓坏了。
+差点无奈的准备放弃js，使用flash。ie总是能给我们这些前端开发者不少的意外。
+</p>
+
+<dl>
+<dt>修复方法</dt>
+</dl>
+<p>
+对父层使用
+</p>
+<pre css>
+  .trouble-node{
+    position:relative;
+  }
+  .parent-of-trouble-node{
+    position:relative;
+  }
+</pre>
+
+</body>
+</html>
