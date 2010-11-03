@@ -1,0 +1,69 @@
+a{
+  color:CadetBlue;
+} .cn-font{
+  font-family:宋体;
+}
+#page{
+  margin:0 auto;
+} 
+.ks-box-title{
+  font-size:14px;
+}
+.ks-box-bd{
+  padding:4px 0 4px 2em;
+  /*border:1px solid CornflowerBlue;*/
+  border:none;
+}
+.ks-box-hd{
+  background:none;
+  border:none;
+  border-bottom:1px dashed CornflowerBlue;
+  padding:3px 0;
+}
+
+table {  width:100%; border-collapse:collapse; margin-bottom:0.5em;}
+th,td { padding:0 0.5em 0 0;line-height:1.8em; }
+ tbody th[scope="row"], tbody th.sub {font-weight:normal; background-color:CornflowerBlue;background:none;width:5em;}
+
+tbody th.five{width:6em;}
+tbody td { border-bottom:1px solid #eee;border:none; }
+.photo{
+  text-align:center;
+} 
+.photo .caption{
+  -moz-border-radius:3px 3px 3px 3px;
+  background-color:aliceBlue;
+  border:1px solid #EEEEEE;
+  width:110px;
+  margin:0 auto;
+  text-align:center;
+} 
+.caption img {
+  border:0 none;
+  margin:0;
+  padding:0;
+} 
+.caption-text{
+  font-size:12px;
+  line-height:16px;
+  margin:0;
+  padding:0 4px 5px;
+}
+.ks-box-bd .time{
+  width:25%;
+  float:left;
+}
+.ks-box-bd .content{
+  width:75%;
+  float:left;
+} .topics{
+  padding-top:0.5em;
+} .ks-box-bd li{
+  line-height:1.8em;
+} .ks-box-bd p{
+  text-indent:1em;
+} .ks-tab-trigger a,.ks-subtab-trigger a{
+  color:CadetBlue;
+} .ks-subtab-trigger-active a,.ks-tab-trigger-active a{
+  color:SlateGray;
+}

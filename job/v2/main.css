@@ -1,0 +1,78 @@
+@import "base-min.css";
+body{
+  width:876px;
+  margin:0 auto;
+  background-color:#FFF;
+}
+.page{
+  /*background:url('images/foot.jpg') no-repeat right bottom;
+   */
+}
+h1,h2{
+  font-size:2em;
+  text-shadow:2px 2px 6px #ccc;
+}
+#header{
+  position:relative;
+  height:233px;
+  /*background:url('images/top.jpg') no-repeat left top;
+   */
+}
+.items{
+  margin-left:100px;
+  margin-right:110px;
+}
+.items p,.items ol{
+  border:1px dotted #ccc;
+  border-left:3px double #ccc;
+  padding:2px 1em;
+}
+#header p.basic{
+  margin-right:140px;
+}
+#header h1{
+  padding-top:2.5em;
+}
+#header img{
+  display:block;
+  position:absolute;
+  right:110px;
+  top:2em;
+}
+
+#content{
+  /*background:url("images/left.jpg") no-repeat left 30px;
+   */
+}
+ol{
+  list-style:decimal inside none;
+}
+table{
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+  width:100%;
+}
+th{
+  text-align:right;
+  background-color:#eee;
+  width:5em;
+  padding:2px 1em 2px;
+}
+td{
+  padding-left:1em;
+  font-family:georgia;
+}
+th:after{
+  content:':';
+}
+a{
+  color:#333;
+  text-decoration:underline;
+}
+
+#footer{
+  height:5em;
+  font-size:12px;
+  line-height:5em;
+  text-align:center;
+}

@@ -1,0 +1,143 @@
+@import "./kissy/base.css";
+@import "./kissy/tab.css";
+@import "./kissy/bar.css";
+@import "./kissy/box.css";
+@import "./fancybox/jquery.fancybox.css";
+body{
+  width:888px;
+  margin:0 auto;
+  font:14px/1.8 verdana,tahoma,arial,sans-serif;
+}
+h1{
+  font-size:2em;
+  text-align:center;
+  margin:1em 0;
+  border-bottom:dashed 1px #ccc;
+}
+h1 .time{
+  font-size:12px;
+  font-weight:normal;
+}
+p{
+  text-indent:2em;
+  padding-bottom:.5em;
+}
+.ks-bar a,#page a{
+  color:CadetBlue;
+}
+#page .cn-font{
+  font-family:宋体;
+}
+#page{
+  margin:0 auto;
+}
+#page .ks-box-title{
+  font-size:14px;
+}
+#page .ks-box-bd{
+  padding:4px 0 4px 1em;
+  /*border:1px solid CornflowerBlue;*/
+  border:none;
+}
+#page .ks-box-hd{
+  background:none;
+  border:none;
+  border-bottom:1px dashed CornflowerBlue;
+  padding:3px 1em;
+}
+
+#page table {  width:100%; border-collapse:collapse; margin-bottom:0.5em;}
+#page th,td { padding:0 0.5em 0 0;line-height:1.8em; }
+#page  tbody th[scope="row"], tbody th.sub {font-weight:normal; background-color:CornflowerBlue;background:none;width:5em;*width:6em;}
+
+#page tbody th.five{width:6em;*width:7em;}
+#page tbody td { border-bottom:1px solid #eee;border:none; }
+#page .photo{
+  text-align:center;
+}
+#page .photo .caption{
+  -moz-border-radius:3px 3px 3px 3px;
+  background-color:aliceBlue;
+  border:1px solid #EEEEEE;
+  width:110px;
+  margin:0 auto;
+  text-align:center;
+} 
+#page .caption img {
+  border:0 none;
+  margin:0;
+  padding:0;
+} 
+#page .caption-text{
+  font-size:12px;
+  line-height:16px;
+  margin:0;
+  padding:0 4px 5px;
+}
+#page .ks-box-bd .time{
+  width:28%;
+  float:left;
+}
+#page .ks-box-bd .content{
+  width:72%;
+  float:left;
+  _float:right;
+} 
+#page .ks-box-bd .content img{
+  display:inline;
+}
+#page .topics{
+  padding-top:0.5em;
+} 
+#page .ks-box-bd li{
+  line-height:1.8em;
+} 
+#page .ks-box-bd p{
+  text-indent:0;
+} 
+#page .ks-tab-trigger a,.ks-subtab-trigger a{
+  color:CadetBlue;
+} 
+#page .ks-subtab-trigger-active a,.ks-tab-trigger-active a{
+  color:SlateGray;
+}
+
+.ks-tab-trigger{
+  _height:24px;
+}
+.ks-tab-trigger-active {
+  _height:26px;
+}
+#showAll,#download-bar{
+  display:none;
+  width:6em;
+  cursor:pointer;
+  color:CadetBlue;
+}
+#download-bar{
+  margin-left:2em;
+  display:inline;
+  cursor:auto;
+}
+.ks-bar{
+  margin:0 0 0.5em;
+  font-size:12px;
+  height:1.5em;
+}
+.allShow-hover{
+  text-decoration:underline;
+}
+.clear{
+  clear:both;
+  height:0;
+}
+h2{
+  font-size:14px;
+  line-height:1.5em;
+}
+
+.copy{
+  font-size:12px;
+  text-align:center;
+  line-height:2em;
+}

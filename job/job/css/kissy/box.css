@@ -1,0 +1,66 @@
+/**
+ * Box Extended
+ * @creator 沉鱼<fool2fish@gmail.com>
+ * @base box.css
+ */
+.ks-box{margin-bottom:10px;}
+.ks-box-top,
+.ks-box-bottom{display:block;position:relative;height:4px;margin:0 0 -4px 0;z-index:10;clear:both;}
+.ks-box-bottom{margin:-4px 0 0 0;}
+.ks-box-top s,
+.ks-box-top b,
+.ks-box-bottom s,
+.ks-box-bottom b{float:left;width:4px;height:4px;overflow:hidden;font-size:0;line-height:0;background:url(img/bar-repeatx.png) no-repeat -3px 0;}
+.ks-box-top b{float:right;;background-position:0 0;}
+.ks-box-bottom s{background-position:-3px -3px;}
+.ks-box-bottom b{float:right;background-position:0 -3px;}
+.ks-box-hd{position:relative;padding:3px 10px;border:1px solid #699cbf;border-bottom:none;background:#cce1ff url(img/bar-repeatx.png) repeat-x 0 -10px;}
+.ks-box-title{font-size:12px;font-weight:bold;}
+.ks-box-act{position:absolute;right:10px;top:3px;}
+.ks-box-act a{float:left;margin-left:5px;}
+.ks-box-bd{border:1px solid #699cbf;background:#fff;}
+
+.ks-box,
+.ks-box-top,
+.ks-box-bottom,
+.ks-box-hd,
+.ks-box-bd{*zoom:1;}
+/***********************************************************************************************************************
+ * @强调样式
+ **********************************************************************************************************************/
+.ks-box-strong .ks-box-top s{background-position:-3px -200px;}
+.ks-box-strong .ks-box-top b{background-position:0 -200px;}
+.ks-box-strong .ks-box-bottom s{background-position:-3px -203px;}
+.ks-box-strong .ks-box-bottom b{background-position:0 -203px;}
+.ks-box-strong .ks-box-hd{border-color:#80b2ff;background-color:#a0beff;background-position:0 -210px;}
+.ks-box-strong .ks-box-bd{border-color:#80b2ff;}
+
+/***********************************************************************************************************************
+ * @标准样式
+ **********************************************************************************************************************/
+.ks-box-normal .ks-box-top s{background-position:-3px 0;}
+.ks-box-normal .ks-box-top b{background-position:0 0;}
+.ks-box-normal .ks-box-bottom s{background-position:-3px -3px;}
+.ks-box-normal .ks-box-bottom b{background-position:0 -3px;}
+.ks-box-normal .ks-box-hd{border-color:#bad6ff;background-color:#cce1ff;background-position:0 -10px;}
+.ks-box-normal .ks-box-bd{border-color:#bad6ff;}
+
+/***********************************************************************************************************************
+ * @弱化样式
+ **********************************************************************************************************************/
+.ks-box-weak .ks-box-top s{background-position:-3px -100px;}
+.ks-box-weak .ks-box-top b{background-position:0 -100px;}
+.ks-box-weak .ks-box-bottom s{background-position:-3px -103px;}
+.ks-box-weak .ks-box-bottom b{background-position:0 -103px;}
+.ks-box-weak .ks-box-hd{border-color:#ddd;background-color:#f2f2f2;background-position:0 -110px;}
+.ks-box-weak .ks-box-bd{border-color:#ddd;}
+
+/***********************************************************************************************************************
+ * @裸样式
+ **********************************************************************************************************************/
+.ks-box-naked .ks-box-top s,
+.ks-box-naked .ks-box-top b,
+.ks-box-naked .ks-box-bottom s,
+.ks-box-naked .ks-box-bottom b{display:none;}
+.ks-box-naked .ks-box-hd{border:none;border-bottom:1px solid #bad6ff;background:#fff;}
+.ks-box-naked .ks-box-bd{border:none}

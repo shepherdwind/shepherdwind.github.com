@@ -1,0 +1,67 @@
+#header .test,#footer .test{
+  text-align:center;
+  border:1px blue solid;
+  height:5em;
+  line-height:5em;
+}
+#content .test{
+  margin:4px 0.5em 0.1em;
+}
+#content .test a{
+  font-family:宋体;
+}
+#content .main-wrap{
+}
+#content .ks-box{
+  padding:0 0.5%;
+}
+#content .main-wrap .ks-box{
+}
+#content .col-sub .ks-box,
+#content .col-extra .ks-box{
+  width:99%;
+}
+#content .ks-box-bd{
+  min-height:10em;
+}
+#content .col-sub .ks-box-bd,
+#content .col-extra .ks-box-bd{
+  min-height:26em;
+}
+/**
+ * 两栏布局样式
+ * 左右两栏，左边sub，右边main
+ * */
+#content.s20m0 .col-main .main-wrap{
+  margin-left:20em;
+}
+#content.s20m0 .col-sub{
+  margin-left:-100%;
+  width:20em;
+}
+
+/**
+ * 两栏布局样式
+ * 左右两栏，左边main，右边sub
+ * */
+#content.m0s20 .col-main .main-wrap{
+  margin-right:20em;
+}
+#content.m0s20 .col-sub{
+  margin-left:-20em;
+  width:20em;
+}
+/**
+ * 三栏布局
+ **/
+.s18m0e18 .col-main .main-wrap{
+  margin:0 17em;
+}
+.s18m0e18 .col-sub{
+  margin-left:-100%;
+  width:17em;
+}
+.s18m0e18 .col-extra{
+  margin-left:-17em;
+  width:17em;
+}
