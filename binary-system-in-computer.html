@@ -1,13 +1,30 @@
-<!DOCTYPE HTML>
-<html lang="ZH-CN">
-<head>
-	<meta charset="UTF-8">
-  <link rel="Stylesheet" type="text/css" href="style.css" />
-	<title>从二进制到现实世界的模拟</title>
-</head>
-<body>
-  <div class="contents">
-
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style/default.css" />
+    <link rel="stylesheet" type="text/css" href="./style/article.css" />
+    <title>从二进制到现实世界的模拟</title>
+  </head>
+  <body>
+    <header>
+    <div class="header-wrap">
+      <ul class="main-nav">
+        <li><a href="./index.html">Home</a></li>
+        <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
+        <li><a href="./plum/">Plum</a></li>
+        <li><a href="./cssParser/">cssParser</a></li>
+      </ul>
+      <h2>从二进制到现实世界的模拟</h2>
+    </div>
+    </header>
+    <div class="content">
+      <div class="content-nav" id="J_nav">
+        <div class="box-hd">目录导航
+        </div>
+      </div>
+      <div class="content-main">
+        
 
 <p>
 计算机所有都是人所创造的，计算机从二进制的01两个数字到构造互联网这么,
@@ -17,7 +34,7 @@
 </p>
 
 
-<h2 id="toc_0.1">数字世界的第一步：实现数学计算</h2>
+<h3 id="toc_0.0.1">数字世界的第一步：实现数学计算</h3>
 
 <p>
 计算机首先用电流的有无模拟出01两个数字，然后，通过磁体记录保存这些数据。
@@ -35,7 +52,7 @@
 的空间，表示如下
 </p>
 
-<h3 id="toc_0.1.1">二进制加法</h3>
+<h4 id="toc_0.0.1.1">二进制加法</h4>
 
 <pre>
   00000000 00000000
@@ -55,7 +72,7 @@
   
 </pre>
   
-<h3 id="toc_0.1.2">二进制乘法</h3>
+<h4 id="toc_0.0.1.2">二进制乘法</h4>
 
 <p>
 乘法在二进制中也可以和转换为加发的，有了乘法，除法本身也一种乘法：除以一个数
@@ -73,7 +90,7 @@
    00001111
 </pre>
 
-<h2 id="toc_0.2">语言符号编码</h2>
+<h3 id="toc_0.0.2">语言符号编码</h3>
 
 <p>
 第一代的计算机是用于计算的，当然，我们现实并不需要那么复杂的计算。计算机开始
@@ -82,5 +99,24 @@
 运算方法和运算符号可以统称为语法规则，而基本内容符号可以是
 </p>
 
-</body>
+      </div>
+      <script src="http://a.tbcdn.cn/??s/kissy/1.2.0/kissy-min.js"></script>
+      <script src="./js/article.js" type="text/javascript"></script>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'shepherdwind'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+   </div>
+  </body>
 </html>

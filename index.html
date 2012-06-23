@@ -1,106 +1,272 @@
-<!DOCTYPE HTML>
-<html lang="ZH-CN">
-<head>
-	<meta charset="UTF-8">
-  <link rel="Stylesheet" type="text/css" href="style.css" />
-	<title>E翔工作室培训计划与代码库 </title>
-</head>
-<body>
-  <div class="contents">
-<h1 id="toc_1">E翔工作室培训计划与代码库</h1>
-<h2 id="toc_1.1">说明</h2>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style/default.css" />
+    <title>wiki首页</title>
+  </head>
+  <body>
+    <header>
+    <div class="header-wrap">
+      <ul class="main-nav">
+        <li><a href="./index.html">Home</a></li>
+        <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
+        <li><a href="./plum/">Plum</a></li>
+        <li><a href="./cssParser/">cssParser</a></li>
+      </ul>
+      <h2>wiki首页</h2>
+    </div>
+    </header>
+    <div class="content">
+      <div class="content-main grids">
+        
+
+<h3 id="toc_0.0.1">关于</h3>
 
 <p>
-如果学习web开发编程，这个问题一直困扰着工作室的新人。根据上个学习对上一届成员的
-培训，总结工作室常用的计算机知识，为程序组新人入门和其他成员学习深入研究web开发
-的总结。希望以此，回报工作室，给工作室留下一份宝贵的资料，让技术在工作室不断成长
-。同时希望能够有助于新人的学习。
+个人wiki，使用<a href="http://code.google.com/p/vimwiki/">vimwiki</a>维护，托管于github上
+。一直有使用vimwiki，但是都没有一套比较好的模板，最近发现github提供gh-pages的功
+能，同时把github转到自己的域名上，感觉还不错，于是在博客之外，维护这么一个wiki。
 </p>
 
 <p>
-最后，此文档留待工作室后来人，继续完善。
+主要存放一些个人总结的小东西，还有github上一些项目的文档。最近比较懒得写博文，不
+过，已经不想再用WorldPress写了，后面如果再写博客，也都用<a href="http://daringfireball.net/projects/markdown/">markdown</a>写吧。
 </p>
 
-<h2 id="toc_1.2">目录～大纲</h2>
-<ol>
-<li>
-<a href="basic.html">序言·入门</a>
-</li>
-<li>
-<a href="first step of css and html.html">css与html入门</a>
-</li>
-<ol>
-<li>
-<a href="HTML示例文档.html">HTML示例文档</a>
-</li>
-<li>
-<a href="浏览器.html">浏览器</a>
-</li>
-<li>
-<a href="special-symbols.html">html特殊符号</a>
-</li>
-<li>
-<a href="Image Replacement.html">css中经典的图片替换技术</a>
-</li>
-</ol>
-<li>
-<a href="What-the-programmer-always-deal-with.html">程序员折腾的那些事</a>
-</li>
-<li>
-<a href="程序基础——JavaScript和PHP基本语法.html">程序基础——JavaScript和PHP基本语法</a>
-</li>
-<ol>
-<li>
-<a href="基本语法.html">基本语法</a>
-</li>
-<li>
-<a href="语言结构.html">语言结构</a>
-</li>
-<li>
-<a href="字符串操作与正则表达式.html">字符串操作与正则表达式</a>
-</li>
-</ol>
-<li>
-<a href="css禅意花园——布局之美.html">css禅意花园——布局之美</a>
-</li>
-<li>
-<a href="JavaScript进阶——简洁之美.html">JavaScript进阶——简洁之美</a>
-</li>
-<li>
-<a href="PHP开发实战.html">PHP开发实战</a>
-</li>
-<li>
-<a href="综合·结语.html">综合·结语</a>
-</li>
-</ol>
-  
-<h2 id="toc_1.3">小知识集合</h2>
+<h3 id="toc_0.0.2">github上托管的项目与文档</h3>
 
-<ol>
+<p>
+github还是非常好用的工具，托管的一些项目已经不再维护了。这里统一放下文档，readme
+和wiki page固然不错，但是，对于前端而且，那些毕竟太弱了。还不如自己写html来的爽
+快。
+</p>
+
+<h4 id="toc_0.0.2.1">维护中的项目</h4>
+
+<p>
+还在维护的项目基本通过gh-pages来管理自己的文档，此处只是简单的一个链接。
+</p>
+<ul>
 <li>
-<a href="css part.html">css知识小记</a>
-</li>
+<a href="http://git.shepherdwind.com/cssParser">cssPaser</a>css拼图工具
+
 <li>
-<a href="css-hack.html">css bug</a>
-</li>
-</ol>
-  
-<h2 id="toc_1.4">待解决问题</h2>
+<a href="http://git.shepherdwind.com/plum">Plum</a>基于node的服务器，主要用于demo开发
+
+</ul>
+ 
+<h4 id="toc_0.0.2.2">其他项目</h4>
 
 <ul>
-<li><input type="checkbox" />
-js动画中，如何判断程序正在运行中，并且在运行时停止某个动画事件的继续运行
-</li>
+<li>
+<a href="https://github.com/shepherdwind/vim">vimconfig</a>据说github上最多的就是vim配置
+  了，同步确实方便。支持win，mac，linux多系统，需要一些系统命令工具的依赖。
+
+<li>
+<a href="https://github.com/shepherdwind/peersay/">peersay</a>同伴提名测验平台，毕业设计
+  作品，用于心理测验的小工具，毕业论文好了以后，就不再管了。
+
+<li>
+<a href="https://github.com/shepherdwind/shepherdwind.github.com">wiki</a>还有就是这个wiki
+  本身了。
+
 </ul>
 
-<h2 id="toc_1.5">资料收藏夹</h2>
+<h3 id="toc_0.0.3">一些笔记</h3>
 
-<h3 id="toc_1.5.1">HTML And CSS入门</h3>
-<ol>
+<ul>
 <li>
-<a href="http://www.dreamdu.com/">梦之都，非常基础，有些繁琐，页面简洁优雅</a>
-</li>
-</ol>
+<a href="Psychology-share.html">Psychology-share</a>心理学分享
 
-</body>
+<li>
+ln命令使用<code>sudo ln /home/shpeherdwind/www/card /var/www/card -s</code>
+
+</ul>
+
+<h3 id="toc_0.0.4">vim笔记</h3>
+
+<ul>
+<li>
+<code>gf</code>在当前文件夹中寻找某个文件,或者在path中查找
+
+<li>
+命令模式下<code>&lt;C-h&gt;</code>删除一个字母
+
+<li>
+大多数时候我们是在正常模式下，我们写代码中，大部分时候是编辑修改中
+
+<li>
+格式化json <code>:%!python -m json.tool</code>
+
+<li>
+vim text-object
+
+</ul>
+<table>
+<tr>
+<th>
+textobjet
+</th>
+<th>
+{}
+</th>
+<th>
+()
+</th>
+<th>
+[]
+</th>
+<th>
+&lt;&gt;
+</th>
+<th>
+''
+</th>
+</tr>
+<tr>
+<td>
+opration
+</td>
+<td>
+i{,i}
+</td>
+<td>
+a(,a)
+</td>
+<td>
+a[,a]
+</td>
+<td>
+a&lt;,a&gt;
+</td>
+<td>
+a'
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<th>
+textobjet
+</th>
+<th>
+""
+</th>
+<th>
+``
+</th>
+<th>
+word
+</th>
+<th>
+paragraph
+</th>
+<th>
+senctence
+</th>
+</tr>
+<tr>
+<td>
+opration
+</td>
+<td>
+a"
+</td>
+<td>
+a`
+</td>
+<td>
+aw
+</td>
+<td>
+ap
+</td>
+<td>
+is,as
+</td>
+</tr>
+</table>
+
+
+<h3 id="toc_0.0.5">IE兼容性问题总结</h3>
+
+<ul>
+<li>
+vml在ie8中使用，会存在高度问题，最好固定高度
+
+<li>
+VML使用activeX，与js无关，在js禁止的时候依然能够运行
+
+<li>
+在IE67中存在一个重绘的bug，如果元素位置变化，一个子绝对定位的子元素无法跟随
+  移动，解决方案可以把绝对定位元素放置在高度变化元素的前面
+
+<li>
+IE中相对定位将导致子元素的margin负值和相对定位元素位置异常诡异
+
+<li>
+IE6 css选择器中使用注释，并且hack，导致相应的选择器无效
+
+</ul>
+ 
+<h3 id="toc_0.0.6">一些想法</h3>
+
+<ul>
+<li>
+KISSY的map和filter方法应该支持对象的
+
+<li>
+KISSY的each方法应该增加中途退出的功能
+
+<li>
+事件逻辑和属性分类管理stdclass.js
+
+<li>
+vim哲学
+
+<ul>
+<li>
+大多数时候我们是在正常模式下，我们写代码中，大部分时候是编辑修改中
+
+</ul>
+</ul>
+
+<h3 id="toc_0.0.7">第一版wiki遗留的</h3>
+
+<p>
+2010年的东西了，本来用于<a href="http://efly.nenu.edu.cn">工作室</a>培训使用的文档，后来懒
+得维护了，还留下一些，值得继续使用的。
+</p>
+
+<ul>
+<li>
+<a href="binary-system-in-computer.html">二进制一些皮毛</a>有一段时间研究了一些些
+
+<li>
+<a href="special-symbols.html">special-symbols</a>HTML特殊字符，其他特殊字符等等收集
+
+</ul>
+
+      </div>
+      <script src="http://a.tbcdn.cn/??s/kissy/1.2.0/kissy-min.js"></script>
+      <script src="./js/default.js" type="text/javascript"></script>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'shepherdwind'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+   </div>
+  </body>
 </html>
