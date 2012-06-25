@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style/default.css" />
+    <link rel="stylesheet" type="text/css" href="./style/article.css" />
+    <title>less css 同样样式集合</title>
+  </head>
+  <body>
+    <header>
+    <div class="header-wrap">
+      <ul class="main-nav">
+        <li><a href="./index.html">Home</a></li>
+        <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
+        <li><a href="./plum/">Plum</a></li>
+        <li><a href="./cssParser/">cssParser</a></li>
+      </ul>
+      <h2>less css 同样样式集合</h2>
+    </div>
+    </header>
+    <div class="content">
+      <div class="content-nav" id="J_nav">
+        <div class="box-hd">目录导航
+        </div>
+      </div>
+      <div class="content-main">
+        
+
+<p>
+收集一些常用的less集合
+</p>
+
+<h3 id="toc_0.0.1">文字自动隐藏</h3>
+
+<pre less>
+  .text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</pre>
+
+<h3 id="toc_0.0.2">css3相关</h3>
+
+<pre less>
+  .border-radius(@radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+  }
+  .opacity(@opacity) {
+    opacity: @opacity / 100;
+    filter: ~"alpha(opacity=@{opacity})";
+  }
+</pre>
+
+<h3 id="toc_0.0.3">border实现三角</h3>
+
+<pre less>
+  //border实现三角
+  #arrow {
+    .common(){
+      width: 0;
+      height: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+    .top(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      order-bottom: @h solid @color;
+    }
+
+    .bottom(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      border-top: @h solid @color;
+    }
+  }
+</pre>
+
+<h3 id="toc_0.0.4">所有</h3>
+
+<pre brush:less>
+  .ui-box-inline {
+    .inline-block;
+  }
+  .ui-box-img {
+    display: block;
+    img { display: block; }
+  }
+  .ui-text-hide {
+    .hide-text;
+  }
+  .ui-box-img {
+    display: block;
+    .img {
+      display: block;
+    }
+  }
+  .inline-block() {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+  }
+  .hide-text() {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+  }
+  .text-hide() {
+    text-indent: -9999em;
+  }
+  .center-block() {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .border-radius(@radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+  }
+  .opacity(@opacity) {
+    opacity: @opacity / 100;
+    filter: ~"alpha(opacity=@{opacity})";
+  }
+
+  .fontHead(){
+    font-family:"\5FAE\8F6F\96C5\9ED1", arial;
+  }
+
+  //border实现三角
+  #arrow {
+    .common(){
+      width: 0;
+      height: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+    .top(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      border-bottom: @h solid @color;
+    }
+
+    .bottom(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      border-top: @h solid @color;
+    }
+  }
+</pre>
+
+      </div>
+      <script src="http://a.tbcdn.cn/??s/kissy/1.2.0/kissy-min.js"></script>
+      <script src="./js/article.js" type="text/javascript"></script>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'shepherdwind'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+   </div>
+  </body>
+</html>

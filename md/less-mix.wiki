@@ -1,0 +1,134 @@
+%title less css 同样样式集合
+%template article
+
+收集一些常用的less集合
+
+=== 文字自动隐藏 ===
+
+{{{less
+  .text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}}}
+
+=== css3相关 ===
+
+{{{less
+  .border-radius(@radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+  }
+  .opacity(@opacity) {
+    opacity: @opacity / 100;
+    filter: ~"alpha(opacity=@{opacity})";
+  }
+}}}
+
+=== border实现三角 ===
+
+{{{less
+  //border实现三角
+  #arrow {
+    .common(){
+      width: 0;
+      height: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+    .top(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      order-bottom: @h solid @color;
+    }
+
+    .bottom(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      border-top: @h solid @color;
+    }
+  }
+}}}
+
+=== 所有 ===
+
+{{{brush:less
+  .ui-box-inline {
+    .inline-block;
+  }
+  .ui-box-img {
+    display: block;
+    img { display: block; }
+  }
+  .ui-text-hide {
+    .hide-text;
+  }
+  .ui-box-img {
+    display: block;
+    .img {
+      display: block;
+    }
+  }
+  .inline-block() {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+  }
+  .hide-text() {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+  }
+  .text-hide() {
+    text-indent: -9999em;
+  }
+  .center-block() {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .border-radius(@radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+  }
+  .opacity(@opacity) {
+    opacity: @opacity / 100;
+    filter: ~"alpha(opacity=@{opacity})";
+  }
+
+  .fontHead(){
+    font-family:"\5FAE\8F6F\96C5\9ED1", arial;
+  }
+
+  //border实现三角
+  #arrow {
+    .common(){
+      width: 0;
+      height: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+    .top(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      border-bottom: @h solid @color;
+    }
+
+    .bottom(@w, @h, @color, @bg: #fff) {
+      border-left: @w solid @bg;
+      border-right: @w solid @bg;
+      border-top: @h solid @color;
+    }
+  }
+  }}}
