@@ -152,4 +152,7 @@ KISSY.use('market/scrollFollow', function(S, follow){
   el.append(html);
   //console.log(el.offset());
   new follow('#J_nav');
+
+  S.all('pre').attr('contentEditable', '');
+  S.all('pre').attr('readonly', true);
 });

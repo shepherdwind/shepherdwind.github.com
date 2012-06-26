@@ -5,7 +5,8 @@ body {
   color: #e8e8e8;
   color:#777;
   font-weight:300;
-  background-color: #F2F2F2;
+  background-color: #fefefe;
+  /*background-color: #F2F2F2;*/
   /*background-color: #393939;*/
 }
 
@@ -123,15 +124,15 @@ a small {
 .content-main .colum {
   border-radius: 6px;
   padding: 10px;
-  -moz-transition: background 0.2s linear;
-  -webkit-transition: background 0.2s linear;
-  transition: background 0.2s linear;
+  /*-moz-transition: background 0.2s linear;*/
+  /*-webkit-transition: background 0.2s linear;*/
+  /*transition: background 0.2s linear;*/
 }
 .grids .colum:hover {
-  background: #f8f8f8;
-  -moz-transition: background 0.2s linear;
-  -webkit-transition: background 0.2s linear;
-  transition: background 0.2s linear;
+  /*background: #fdfdfd;*/
+  /*-moz-transition: background 0.2s linear;*/
+  /*-webkit-transition: background 0.2s linear;*/
+  /*transition: background 0.2s linear;*/
 }
 .grids h3 {
   margin-bottom: 10px;
@@ -163,6 +164,7 @@ pre {
   border-radius:5px;
   border:1px solid #e5e5e5;
   overflow-x: auto;
+  margin-bottom: 10px;
 }
 
 table {
