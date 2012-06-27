@@ -3,15 +3,8 @@
 
 === 什么是joycss ===
 
-joycss是一个基于nodejs和php的自动拼图工具。自动拼图的工具已经有不少了，比如
-cssgaga， smartsprite等等，但是cssgaga不支持mac，smartsprite需要写注释，麻烦，并
-且，他们对于自动化发布支持都不给力，所以我们需要一个更强大的自动拼图工具。
-
-                               joycss的目标：使用尽可能简单，功能尽可能强大。
-
-首先来个例子体验一下吧： [[https://github.com/shepherdwind/joycss/blob/master/demo/css/test.css|test.css]] vs [[https://github.com/shepherdwind/cssParser/blob/master/demo/css/test.sprite.css|test.sprite.css]] 
-
-code: https://github.com/shepherdwind/joycss
+joycss是一个基于nodejs和php的自动拼图工具。joycss的目标：使用简单，功能强大
+。[[what-make-joycss-different|joycss独特之处]]。code: https://github.com/shepherdwind/joycss
 
 === 支持的特性 ===
 

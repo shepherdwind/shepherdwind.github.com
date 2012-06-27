@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style/default.css" />
+    <link rel="stylesheet" type="text/css" href="./style/article.css" />
+    <title>joycss独特之处</title>
+  </head>
+  <body>
+    <header>
+    <div class="header-wrap">
+      <ul class="main-nav">
+        <li><a href="./index.html">Home</a></li>
+        <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
+        <li><a href="./plum/">Plum</a></li>
+        <li><a href="./joycss.html">joycss</a></li>
+      </ul>
+      <h2>joycss独特之处</h2>
+    </div>
+    </header>
+    <div class="content">
+      <div class="content-nav" id="J_nav">
+        <div class="box-hd">目录导航
+        </div>
+      </div>
+      <div class="content-main">
+        
+
+<p>
+joycss是一个基于node和php的css自动拼图工具，本文主要说明joycss的不同于其他拼图
+工具的一些特点，使用文档，请移步<a href="joycss.html">joycss</a>。
+</p>
+
+<p>
+世界上已经很多sprite拼图工具了，比如我以前经常使用的smartsprite，或者cssgaga，或
+者在线拼图工具等等。他们各自有其强大之处，使用起来，也总是会有很多不如意的地方，
+smartsprite 必须看着文档写注释，cssgaga使用拖拽，还不支持mac，linux，不支持自动
+化发布集成。
+</p>
+
+<p>
+joycss主要有以下几个特殊之处：
+</p>
+<ol>
+<li>
+支持对手工sprite拼图过的样式修改操作。包括在已经拼好的图片后面追加图片和背景图
+  覆盖两种操作。
+
+<li>
+同时兼容垂直拼图和紧凑拼图两种方案，支持repeat-x，repeat-y图片处理。 使用自动
+  判断是否可以使用紧凑方式拼图，如果css定义了高度和宽度，那么使用紧凑拼图，其他
+  图片单独做一行处理，使用smartsprite方式拼图。一张sprite图，既有紧凑方式，又有
+  单行留白拼图。
+
+<li>
+对css文件意义的深度分析，知道css的意义，可以很方便的：
+
+<ol>
+<li>
+对背景图定位，通过分析css样式本身来获取信息，包括读取图片所在css规则中的，width,
+    height, line-height, padding, background-position，通过计算来处理图片的位置
+
+<li>
+使用背景图的url参数来弥补一些css无法获取的信息，或者开发者的特殊处理
+
+<li>
+很好的处理css规则嵌套，和css hack，比如<code>@media print{ body {}}</code>
+
+</ol>
+<li>
+使用命令行执行，可以方便集成在自动发布过程中。
+
+<li>
+对于淘宝内容开发者，支持图片拼好以后，调用tps图片上传接口，上传图片，并且替换
+  图片url链接。
+
+</ol>
+<p>
+主要就是这些了，不知道读者觉得如何，还有什么功能你觉得应该有呢。
+</p>
+
+<h3 id="toc_0.0.1">默认假设</h3>
+
+<p>
+joycss为了做到尽可能使用简单，假设以下情况是最普通，最常用的情况：一个css文件需
+要处理的css文件，里面所有图片(除了http请求的图片)都是需要做sprite拼图的，并且图
+片的定位可以通过背景图所在的css规则中确定。
+</p>
+
+<p>
+安装这样的默认情况，一个css文件是不需要做任何处理，可以通过joycss生成sprite合成
+后的样式和图片。当然，你也许会说，我要自定义怎么办，一个图片我不想做拼图，这个时
+候就需要使用url参数来通知joycss了，过滤一个图片在图片url后面假设一个<code>esc</code>的参数
+，就像这样<code>background: url(a.png?esc) no-repeat</code>，遇到这样的情况，这个图片就不会
+被合并了。其他情况，同样如此，需要通过url参数来告知joycss应该如何处理。url参数的
+使用会尽可能简介，因为大多数情况下，都和默认假设相符，只在某些情况才需要开发者加
+url参数。
+</p>
+
+<h3 id="toc_0.0.2">对sprite过的css修改</h3>
+
+<p>
+这种情况是，比如一个已经手动拼图好的css文件，样式是做个sprite处理的了，以前是手
+动拼图，那么，此时如果需要增加一个背景图，或者，需要修改某个背景图，这样就属于对
+sprite 的样式修改了。最简单的方式是追加，追加只会在原有的sprite图片最后追加一个
+图片，并且写入追加背景图css定位信息。第二种属于覆盖原有图片，会把新的图片放在原
+来sprite图片的相同位置，css样式不做修改。
+</p>
+
+<p>
+修改sprite有时候可能会产生问题，比如某个图片使用的定位方式不是基于图片左上点，而
+是使用<code>0 -100%</code> 这样的情况需要使用者自己判断了。不过，还是会有一些情况有用的。
+</p>
+
+<h3 id="toc_0.0.3">css意义的分析</h3>
+
+<p>
+css意义的分析，主要通过<code>src/cssReader.js</code>完成的，cssReader使用一个对象的三个属性
+分别贮存一组css规则的<code>selector, property, value</code>，三者都是数组贮存，这样避免了使
+用一个对象<code>{property: value}</code>这种情况下，遇到css hack时可能被覆盖了，比如
+<code>color: red; color: blue\9; color: #111\8</code>，属性对应3个值。
+</p>
+
+      </div>
+      <script src="http://a.tbcdn.cn/??s/kissy/1.2.0/kissy-min.js"></script>
+      <script src="./js/article.js" type="text/javascript"></script>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'shepherdwind'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+   </div>
+  </body>
+</html>
