@@ -18,7 +18,7 @@ github还是非常好用的工具，托管的一些项目已经不再维护了�
 ==== 维护中的项目 ====
 
 还在维护的项目基本通过gh-pages来管理自己的文档，此处只是简单的一个链接。
-- css拼图工具[[cssParser]]
+- css拼图工具[[joycss]]
 - [[http://git.shepherdwind.com/plum|Plum]]基于node的服务器，主要用于demo开发
  
 ==== 其他项目 ====
@@ -33,8 +33,12 @@ github还是非常好用的工具，托管的一些项目已经不再维护了�
 === 一些笔记 ===
 
 * [[Psychology-share]]心理学分享
-* ln命令使用`sudo ln /home/shpeherdwind/www/card /var/www/card -s`
+* ln命令使用`sudo ln ~/www/card /var/www/card -s`
 * less mix集合[[less-mix]]
+* git删除远程分支`git push origin :gh-pages`
+* 网速限制(Limit bandwidth)的方案
+  * for Mac [[http://macfidelity.de/2009/05/17/mac-limit-bandwidth-in-mac-os-x-using-ipfw/index.html|ipfw]]
+  * for win [[http://www.netlimiter.com/|NetLimiter]]
 
 === vim笔记 ===
 
@@ -42,15 +46,7 @@ github还是非常好用的工具，托管的一些项目已经不再维护了�
 - 命令模式下`<C-h>`删除一个字母
 - 大多数时候我们是在正常模式下，我们写代码中，大部分时候是编辑修改中
 - 格式化json `:%!python -m json.tool`
-- vim text-object
-| textobjet | {}    | ()    | []    | <>    | '' |
-|-----------|-------|-------|-------|-------|----|
-| opration  | i{,i} | a(,a) | a[,a] | a<,a> | a' |
-
-| textobjet | "" | `` | word | paragraph | senctence |
-|-----------|----|----|------|-----------|-----------|
-| opration  | a" | a` | aw   | ap        | is,as     |
-
+- vim text-object`:help text-object`
 
 === IE兼容性问题总结 ===
 

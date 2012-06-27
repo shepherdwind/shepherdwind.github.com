@@ -1,0 +1,448 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./style/default.css" />
+    <link rel="stylesheet" type="text/css" href="./style/article.css" />
+    <title>joycss文档</title>
+  </head>
+  <body>
+    <header>
+    <div class="header-wrap">
+      <ul class="main-nav">
+        <li><a href="./index.html">Home</a></li>
+        <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
+        <li><a href="./plum/">Plum</a></li>
+        <li><a href="./joycss.html">joycss</a></li>
+      </ul>
+      <h2>joycss文档</h2>
+    </div>
+    </header>
+    <div class="content">
+      <div class="content-nav" id="J_nav">
+        <div class="box-hd">目录导航
+        </div>
+      </div>
+      <div class="content-main">
+        
+
+<h3 id="toc_0.0.1">什么是joycss</h3>
+
+<p>
+joycss是一个基于nodejs和php的自动拼图工具。自动拼图的工具已经有不少了，比如
+cssgaga， smartsprite等等，但是cssgaga不支持mac，smartsprite需要写注释，麻烦，并
+且，他们对于自动化发布支持都不给力，所以我们需要一个更强大的自动拼图工具。
+</p>
+<blockquote>
+joycss的目标：使用尽可能简单，功能尽可能强大。
+</blockquote>
+
+<p>
+首先来个例子体验一下吧： <a href="https://github.com/shepherdwind/joycss/blob/master/demo/css/test.css">test.css</a> vs <a href="https://github.com/shepherdwind/cssParser/blob/master/demo/css/test.sprite.css">test.sprite.css</a> 
+</p>
+
+<p>
+code: <a href="https://github.com/shepherdwind/joycss">https://github.com/shepherdwind/joycss</a>
+</p>
+
+<h3 id="toc_0.0.2">支持的特性</h3>
+
+<p>
+根据现有的需求，主要实现以下特性：
+</p>
+<ul>
+<li>
+sprite分组支持，可以在同一个css文件合并成多个sprite图片
+
+<li>
+sprite支持垂直和水平两种布局方式，使用非紧密拼图，和smartsprite效果一致
+
+<li>
+x或者y方向图片平铺支持，图片水平排列支持y方向拼图，垂直排列则相反
+
+<li>
+支持png8和png24背景透明，默认情况下，使用png8透明
+
+<li>
+支持通过在css规则中的line-height或者height，width等属性，定位图片应该的位置
+
+<li>
+sprite图片位置自定义设置，所有的配置都通过背景图url参数方式，比如：<code>a.png?id=1</code>
+
+</ul>
+
+<p>
+计划中需要实现的功能
+</p>
+<ul>
+<li>
+开发模式到发布过程的简单切换——通过结合Plum实现
+
+<li>
+支持在已有sprite图片上增加或修改sprite图片
+
+</ul>
+
+<h3 id="toc_0.0.3">如何使用</h3>
+
+<pre>
+npm install -g joycss
+joycss xx.css
+</pre>
+
+<h4 id="toc_0.0.3.1">默认假设</h4>
+
+<p>
+在默认情况下，joycss假设一个css中所有的非http地址的图片都是需要sprite拼图的，
+开发者按照正常的模式写css，然后，joycss通过分析css文件，把css中需要拼图的图片
+合并到一起，然后重写生成合适的css文件。在拼图过程中，joycss会自动分析css每个
+背景图定位的规则，计算出应该需要的位置，如果css本身的信息实在不足够的情况下，需
+要开发写一些api接口，让joycss知道应该如何处理。
+</p>
+
+<p>
+在大多数情况，符合上述假设的背景图，是不需要做任何额外处理的，joycss能自动分
+析应该做的事情。如果需要自定义一些，或者css本身的信息量不够时，需要使用url参数来
+说明。
+</p>
+
+<h4 id="toc_0.0.3.2">第一步</h4>
+<p>
+按照正常方式书写css规则，比如
+</p>
+
+<pre css>
+.main-right .jieri h2 {
+  background: url(../img/jieri.png) no-repeat;
+  width: 80px;
+}
+.main-left .hunli h2 {
+  background: url(../img/hunli.png) no-repeat;
+  width: 80px;
+}
+.main-right .huabao h2 {
+  background: url(../img/huabao.png) no-repeat;
+  width: 80px;
+}
+</pre>
+  
+<p>
+background可以分开(position, image, repeat)写或者写在一起，不过，还是推荐使用写
+在一起比较好。如何写是没有什么限制的，不过需要确定的是，background-position不要写
+相对位置，那样就没法确定css的位置了，对于百分号，只支持0,50,100三个数。
+</p>
+
+<h4 id="toc_0.0.3.3">第二步</h4>
+
+<p>
+对图片进行分组，去除不需要拼图的图片等。
+</p>
+
+<h4 id="toc_0.0.3.4">图片分组规则</h4>
+
+<p>
+默认情况下，所有的图片分在同一个组，合成一张图片，需要额外分组，则在相应背景图图
+片加上一个<code>id=\d</code>的参数，<code>\d</code>表示数字，从1开始计数，默认的sprite图片，id等于0，
+不需要写
+</p>
+
+<h4 id="toc_0.0.3.5">url参数使用规则</h4>
+
+<p>
+joycss的所有与开发者交互，都是通过背景图url参数来实现的，比如
+</p>
+
+<pre css>
+.main-right .tese h2 {
+  background: url(../img/fenlei.png?id=1&amp;way=h) repeat-y 0 0;
+  width: 480px;
+}
+</pre>
+  
+<p>
+url参数指的是上面css中，background的url中那一段<code>?id=1&amp;way=h</code>，表示第二组sprite
+图，排列方式way为水平horizontal
+</p>
+  
+<p>
+参数以及对应的意义
+<table>
+<tr>
+<th>
+参数名
+</th>
+<th>
+参数全名
+</th>
+<th>
+参数的值
+</th>
+<th>
+意义与作用
+</th>
+<th>
+使用实例
+</th>
+</tr>
+<tr>
+<td>
+esc
+</td>
+<td>
+escape
+</td>
+<td>
+''
+</td>
+<td>
+图片无需拼图
+</td>
+<td>
+a.png?esc
+</td>
+</tr>
+<tr>
+<td>
+way
+</td>
+<td>
+h
+</td>
+<td>
+horizontal
+</td>
+<td>
+排列方式水平排列 [g]
+</td>
+<td>
+a.png?way=h
+</td>
+</tr>
+<tr>
+<td>
+way
+</td>
+<td>
+v
+</td>
+<td>
+vertical
+</td>
+<td>
+垂直排列，默认方式[g]
+</td>
+<td>
+a.png?way=v
+</td>
+</tr>
+<tr>
+<td>
+id
+</td>
+<td>
+id
+</td>
+<td>
+0-9
+</td>
+<td>
+分组id，id相同的图片合并一起
+</td>
+<td>
+a.png?id=1
+</td>
+</tr>
+<tr>
+<td>
+color
+</td>
+<td>
+truecolor
+</td>
+<td>
+''
+</td>
+<td>
+使用png24 [g]
+</td>
+<td>
+a.png?color
+</td>
+</tr>
+<tr>
+<td>
+bg
+</td>
+<td>
+background
+</td>
+<td>
+color
+</td>
+<td>
+背景色，默认值是ffffff7f [g]
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+b
+</td>
+<td>
+bottom
+</td>
+<td>
+\d
+</td>
+<td>
+图片设置margin bottom [v]
+</td>
+<td>
+a.png?b=10
+</td>
+</tr>
+<tr>
+<td>
+r
+</td>
+<td>
+right
+</td>
+<td>
+\d
+</td>
+<td>
+图片设置margin right [h]
+</td>
+<td>
+a.ong?r=10
+</td>
+</tr>
+</table>
+说明：表格中，[g]标志表示为组范围内定义，一组只需定义定一个出现的图片。[h]标
+志说明，只有在水平布局[horizontal]下才有效，[v]表示只在垂直布局[vertical]有
+效。其他都是针对单个图片设置的
+</p>
+
+<h4 id="toc_0.0.3.6">url参数的位置</h4>
+
+<p>
+url参数中，在[g]下的参数，默认情况下，是读取页面第一次出现相应图片的时候。比如
+</p>
+
+<pre css>
+.main-left .fenlei h2 {
+  background: url(../img/fenlei.png?id=1&amp;way=h) repeat-y 0 0;
+  width: 180px;
+  height: 180px;
+}
+.main-right .tese h2 {
+  background: url(../img/tese.png?id=1) no-repeat 0 10px;
+  width: 480px;
+}
+</pre>
+  
+<p>
+以上css规则中，*必须*把参数<code>way=h</code>写在第一个选择器的背景图中，不能写在第二个图片
+上面，这一点规则非常重要。
+</p>
+
+<h4 id="toc_0.0.3.7">背景图片定位规则</h4>
+
+<p>
+背景图的位置信息，经过3个步骤的判断计算来确定的：
+</p>
+
+<ul>
+<li>
+首先是从background-position中获取到top，和left的位置，position 如果没有写top，
+  left，默认都是0。top和left定义不明确，比如使用相对位置也可能导致图片位置不对。
+  position识别一下属性<code>left, 0, 100%, 50%, right, top, bottom,\dpx</code> \d表示数字。
+
+</ul>
+
+<ul>
+<li>
+第二步，根据图片本身的宽高，加上top和left的偏移，获得当前图片应该占有的空间
+
+</ul>
+
+<ul>
+<li>
+第三步，修正图片的大小，图片所占有的空间，应该等于背景图所在的盒子的大小，图片
+  大小的修正，分两种方式，第一，使用手动设置<code>b=xx||r=xx</code>，标明底部或右边需要的空
+  间。第二种，根据当前图片所在css规则的<code>height, width, line-height</code>来设置，比如
+  上面一个例子中，有个css规则<code>width: 180px; height: 180px;</code>，可以确定背景图高宽。
+
+</ul>
+
+<p>
+前面两步确定了三个方向的位置，最后一步确定最后一个方向的间距。因为拼图是垂直或水
+平方式，有一个方向是无需控制的。在垂直布局下，第三步只确定底部空间高度，水平布局
+，第三步确定右边间距。
+</p>
+
+<h4 id="toc_0.0.3.8">背景图repeat</h4>
+
+<p>
+repeat不能同时和定位使用，也就是，有repeat，必须是position:0 0，这样的形式。重复
+的单位是重复图片的倍数，如果图片很大，可能大致图片重复以后高度宽度多出不少。
+</p>
+
+<h4 id="toc_0.0.3.9">sprite图片合并规则</h4>
+
+<p>
+sprite图片名是文件名加上spriteId加上-sprite组成的，比如文件a.css，拼图后生成的
+图片地址是<code>a-sprite.png, a1-sprite.png</code>。
+</p>
+
+<p>
+第三步：通过node调用
+</p>
+
+<h3 id="toc_0.0.4">依赖</h3>
+
+<p>
+需要nodejs和php cli支持，php需要有gd库支持。
+</p>
+
+<h3 id="toc_0.0.5">其他</h3>
+
+<p>
+非常感谢Alexander Kaupp提供的php版本
+[smartsprite](<a href="http://www.tanila.de/smartsprite/index.php),">http://www.tanila.de/smartsprite/index.php),</a> 如果没有这个拼图过程
+的api，joycss还是在摸索如何拼图中，smartsprite提供了很好的拼图功能
+，<code>src/graph/smartsprite.php</code>中，把smartsprite的拼图功能独立出来，通过
+<code>src/graph/tpl.json</code>这样的json文件作为数据源，php版的smartsprite完成图片处理过程
+， node执行css分析过程。
+</p>
+
+<p>
+此外,<code>lib/PropertyValuePart.js</code>使用了
+[nzakas/parser-lib](<a href="https://github.com/nzakas/parser-lib)">https://github.com/nzakas/parser-lib)</a> 中的
+<code>src/css/PropertyValuePart.js</code>，一个很好的css value读取代码。
+</p>
+
+      </div>
+      <script src="http://a.tbcdn.cn/??s/kissy/1.2.0/kissy-min.js"></script>
+      <script src="./js/article.js" type="text/javascript"></script>
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'shepherdwind'; // required: replace example with your forum shortname
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+       })();
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+   </div>
+  </body>
+</html>

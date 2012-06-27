@@ -12,7 +12,7 @@
         <li><a href="./index.html">Home</a></li>
         <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
         <li><a href="./plum/">Plum</a></li>
-        <li><a href="./cssParser/">cssParser</a></li>
+        <li><a href="./joycss.html">joycss</a></li>
       </ul>
       <h2>wiki首页</h2>
     </div>
@@ -49,7 +49,7 @@ github还是非常好用的工具，托管的一些项目已经不再维护了�
 </p>
 <ul>
 <li>
-css拼图工具<a href="cssParser.html">cssParser</a>
+css拼图工具<a href="joycss.html">joycss</a>
 
 <li>
 <a href="http://git.shepherdwind.com/plum">Plum</a>基于node的服务器，主要用于demo开发
@@ -80,11 +80,25 @@ css拼图工具<a href="cssParser.html">cssParser</a>
 <a href="Psychology-share.html">Psychology-share</a>心理学分享
 
 <li>
-ln命令使用<code>sudo ln /home/shpeherdwind/www/card /var/www/card -s</code>
+ln命令使用<code>sudo ln ~/www/card /var/www/card -s</code>
 
 <li>
 less mix集合<a href="less-mix.html">less-mix</a>
 
+<li>
+git删除远程分支<code>git push origin :gh-pages</code>
+
+<li>
+网速限制(Limit bandwidth)的方案
+
+<ul>
+<li>
+for Mac <a href="http://macfidelity.de/2009/05/17/mac-limit-bandwidth-in-mac-os-x-using-ipfw/index.html">ipfw</a>
+
+<li>
+for win <a href="http://www.netlimiter.com/">NetLimiter</a>
+
+</ul>
 </ul>
 
 <h3 id="toc_0.0.4">vim笔记</h3>
@@ -103,95 +117,9 @@ less mix集合<a href="less-mix.html">less-mix</a>
 格式化json <code>:%!python -m json.tool</code>
 
 <li>
-vim text-object
+vim text-object<code>:help text-object</code>
 
 </ul>
-<table>
-<tr>
-<th>
-textobjet
-</th>
-<th>
-{}
-</th>
-<th>
-()
-</th>
-<th>
-[]
-</th>
-<th>
-&lt;&gt;
-</th>
-<th>
-''
-</th>
-</tr>
-<tr>
-<td>
-opration
-</td>
-<td>
-i{,i}
-</td>
-<td>
-a(,a)
-</td>
-<td>
-a[,a]
-</td>
-<td>
-a&lt;,a&gt;
-</td>
-<td>
-a'
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<th>
-textobjet
-</th>
-<th>
-""
-</th>
-<th>
-``
-</th>
-<th>
-word
-</th>
-<th>
-paragraph
-</th>
-<th>
-senctence
-</th>
-</tr>
-<tr>
-<td>
-opration
-</td>
-<td>
-a"
-</td>
-<td>
-a`
-</td>
-<td>
-aw
-</td>
-<td>
-ap
-</td>
-<td>
-is,as
-</td>
-</tr>
-</table>
-
 
 <h3 id="toc_0.0.5">IE兼容性问题总结</h3>
 
