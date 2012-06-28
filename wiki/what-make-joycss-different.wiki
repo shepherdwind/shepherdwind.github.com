@@ -11,11 +11,11 @@ smartsprite 必须看着文档写注释，cssgaga使用拖拽，还不支持mac�
 
 joycss主要有以下几个特殊之处：
 # 支持对手工sprite拼图过的样式修改操作。包括在已经拼好的图片后面追加图片和背景图
-  覆盖两种操作。demo: [[local:../demo/joycss/test-append.html|sprite修改]]
+  覆盖两种操作。demo: [[./demo/joycss/test-append|sprite修改]]
 # 同时兼容垂直拼图和紧凑拼图两种方案，支持repeat-x，repeat-y图片处理。 使用自动
   判断是否可以使用紧凑方式拼图，如果css定义了高度和宽度，那么使用紧凑拼图，其他
   图片单独做一行处理，使用smartsprite方式拼图。一张sprite图，既有紧凑方式，又有
-  单行留白拼图。demo: [[local:../demo/joycss/test.html|基本使用]]
+  单行留白拼图。demo: [[./demo/joycss/test.html|基本使用]]
 # 对css文件意义的深度分析，知道css的意义，可以很方便的：
   # 对背景图定位，通过分析css样式本身来获取信息，包括读取图片所在css规则中的，width,
     height, line-height, padding, background-position，通过计算来处理图片的位置
