@@ -4,7 +4,8 @@
 === 什么是joycss ===
 
 joycss是一个基于nodejs和php的自动拼图工具。joycss的目标：使用简单，功能强大
-。[[what-make-joycss-different|joycss独特之处]]。code: https://github.com/shepherdwind/joycss
+。[[what-make-joycss-different|joycss独特之处]]。code:[[https://github.com/shepherdwind/joycss|repository]]。
+demo: 1.[[local:../demo/joycss/test.html|基本使用]] 2.[[local:../demo/joycss/test-append.html|sprite修改]]
 
 === 支持的特性 ===
 
