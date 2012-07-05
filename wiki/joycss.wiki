@@ -3,76 +3,97 @@
 
 === 什么是joycss ===
 
-joycss是一个基于nodejs和php的自动拼图工具。joycss的目标：使用简单，功能强大
-。[[what-make-joycss-different|joycss独特之处]]。code:[[https://github.com/shepherdwind/joycss|repository]]。
-demo: 1.[[./demo/joycss/test|基本使用]] 2.[[./demo/joycss/test-append|sprite修改]]
+joycss是一个基于nodejs和php的自动拼图工具。joycss的目标：使用简单，功能强大。使
+用简单，就是开发者无需配置，无需为拼图本身做额外的处理。功能强大，在于可以(是可
+以不是必须)随意配置，支持个性化拼图需求。
 
-=== 支持的特性 ===
+快速使用介绍：[[what-make-joycss-different|joycss使用]]。源码:[[https://github.com/shepherdwind/joycss|repository]]。
 
-根据现有的需求，主要实现以下特性：
-- sprite分组支持，可以在同一个css文件合并成多个sprite图片
-- sprite支持垂直和水平两种布局方式，使用非紧密拼图，和smartsprite效果一致
-- x或者y方向图片平铺支持，图片水平排列支持y方向拼图，垂直排列则相反
-- 支持png8和png24背景透明，默认情况下，使用png8透明
-- 支持通过在css规则中的line-height或者height，width等属性，定位图片应该的位置
-- sprite图片位置自定义设置，所有的配置都通过背景图url参数方式，比如：`a.png?id=1`
+线上实例：
+- [[http://flower.taobao.com/|淘宝鲜花频道]]
 
-计划中需要实现的功能
-- 开发模式到发布过程的简单切换——通过结合Plum实现
-- 支持在已有sprite图片上增加或修改sprite图片
-
-=== 如何使用 ===
+=== 安装 ===
 
 {{{
+//安装
 npm install -g joycss
+//最简单执行
 joycss xx.css
+//显示帮助信息
+joycss -h
   }}}
 
-==== 默认假设 ====
+joycss目标是，让开发者无需拼图，大多数情况下，下面文档的说明不需要使用的。开发者
+仅仅需要执行`joycss xx.css`，这样joycss会完成所有应该做的，可能存在少量的拼图错
+误情况，这时候，需要单独设置图片的一些属性。单独设置主要有两种方式，命令行参数和
+背景图url参数。命令行参数全局配置，url参数通常只对图片本身相关属性进行说明，比如
+esc用去声明图片不加入拼图。
 
-在默认情况下，joycss假设一个css中所有的非http地址的图片都是需要sprite拼图的，
-开发者按照正常的模式写css，然后，joycss通过分析css文件，把css中需要拼图的图片
-合并到一起，然后重写生成合适的css文件。在拼图过程中，joycss会自动分析css每个
-背景图定位的规则，计算出应该需要的位置，如果css本身的信息实在不足够的情况下，需
-要开发写一些api接口，让joycss知道应该如何处理。
+可能出现无法拼图的情况，整理在[[what-make-joycss-different]]一文中。
 
-在大多数情况，符合上述假设的背景图，是不需要做任何额外处理的，joycss能自动分
-析应该做的事情。如果需要自定义一些，或者css本身的信息量不够时，需要使用url参数来
-说明。
+=== 命令行使用 ===
 
-==== 第一步 ====
-按照正常方式书写css规则，比如
+通过npm安装后，joycss可以终端或者shell下执行，运行`joycss -h`可以看到所有可以使用
+的参数，在win下，dos可能出现中文乱码的情况，所有帮助文档使用英文。使用方式例子：
+`joycss -casi example.css` 表示使用close，alpha，source，important四个方式组合，
+意思是，使用紧凑拼图，生成png24图片，使用.source.css文件作为输入，并且在sprite
+图片后面增加!important。参数和css文件的位置可以调换，使用`joycss a.css -casi`也
+一样，或者参数分开`joycss -c a.css -a -si`。
 
-{{{css
-.main-right .jieri h2 {
-  background: url(../img/jieri.png) no-repeat;
-  width: 80px;
-}
-.main-left .hunli h2 {
-  background: url(../img/hunli.png) no-repeat;
-  width: 80px;
-}
-.main-right .huabao h2 {
-  background: url(../img/huabao.png) no-repeat;
-  width: 80px;
+-h, --help:: 显示帮助信息。
+
+-v, --version:: 显示版本。
+
+-y, --vertical:: 
+:: 强制使用垂直布局。默认情况下是垂直布局和水平布局同时使用，当可以确定一个图片
+:: 所在的box的宽度的时候，使用紧凑拼图，不能确定的，独占一行，垂直布局。
+
+-c, --close:: 强制使用紧凑布局。使用url参数line改变单张图片规则，使之独占一行。
+
+-a, --alpha:: 
+:: 生成alpha透明方式生成png24图片，默认情况使用png8，使用alpha模式的时候，同时会
+:: 生成png8图片，为ie6 兼容使用，此选项开启生成png24图作为sprite图片。
+
+-w, --white:: 生成背景为白色的图片。
+
+-s, --source:: 
+:: 使用.source.css作为输入源。这种模式下，`joycss a.css`，第一次执行时，复制
+:: a.css到a.source.css，sprite后生成文件为a.css，以后情况下，如果a.source.css存
+:: 在，则读取a.source.css作为输入文件。在默认情况下，生成文件是a.sprite.css。
+
+-i, --important::  为sprite规则增加important，提升优先级，防止被覆盖。
+
+-u, --upload:: 
+:: 使用图片上传。后面三个配置都是和图片上传有关，如果背景图需要使用绝对路径(在淘
+:: 宝有固定的图片cdn服务，图片上传后，返回一个http的地址)，使用u参数，声明图片上
+:: 传，并且使用返回的http路径覆盖相对路径的背景图。-u模式下，会生成一个，后缀为
+:: json 的数据文件，文件名和输入文件名相同。用于贮存上传过的图片路径，在某些情况
+:: ，样式源文件修改，背景图没有修改的情况下，不需要重新上传图片，使用下面的-n参
+:: 数，直接使用贮存在本地的图片地址。
+
+-n, --nochange:: 
+:: 图片没有修改，不上传图片。已经上传过背景图，使用-n参数，声明背景图本身没有修
+:: 改，无需再次上传图片，直接使用上一层上传的图片地址。
+
+--config:: 
+:: 上传文件接口配置，首先在某个目录下创建一个upload.json的文件，自行配置上传图片
+:: 的host和path，淘宝内部接口请使用此接口[[http://wiki.ued.taobao.net/doku.php?id=team:vertical-guide:plum#joycss|upload]]。
+:: 然后，在当前cd到当前目录，执行`joycss --config`，配置文件就可以生效了。图片上
+:: 传接口必须返回json的数据，成功数据: `{url: 'http://a/xx.png'}`，错误信息返回
+:: `{msg: 'error info'}`。配置文件格式如下：
+{{{
+{
+  "host"    : "url.com",
+  "path"    : "/path/to.htm",
+  "filekey" : "photo",
+  "headers" : {
+    "Cookie": "a=b;"
+  }
 }
   }}}
-  
-background可以分开(position, image, repeat)写或者写在一起，不过，还是推荐使用写
-在一起比较好。如何写是没有什么限制的，不过需要确定的是，background-position不要写
-相对位置，那样就没法确定css的位置了，对于百分号，只支持0,50,100三个数。
 
-==== 第二步 ====
 
-对图片进行分组，去除不需要拼图的图片等。
-
-==== 图片分组规则 ====
-
-默认情况下，所有的图片分在同一个组，合成一张图片，需要额外分组，则在相应背景图图
-片加上一个`id=\d`的参数，`\d`表示数字，从1开始计数，默认的sprite图片，id等于0，
-不需要写
-
-==== url参数使用规则 ====
+=== url参数使用规则 ===
 
 joycss的所有与开发者交互，都是通过背景图url参数来实现的，比如
 
@@ -87,19 +108,26 @@ url参数指的是上面css中，background的url中那一段`?id=1&way=h`，表
 图，排列方式way为水平horizontal
   
 参数以及对应的意义
-| 参数名 | 参数全名   | 参数的值   | 意义与作用                   | 使用实例    |
-|--------|------------|------------|------------------------------|-------------|
-| esc    | escape     | ''         | 图片无需拼图                 | a.png?esc   |
-| way    | h          | horizontal | 排列方式水平排列 [g]         | a.png?way=h |
-| way    | v          | vertical   | 垂直排列，默认方式[g]        | a.png?way=v |
-| id     | id         | 0-9        | 分组id，id相同的图片合并一起 | a.png?id=1  |
-| color  | truecolor  | ''         | 使用png24 [g]                | a.png?color |
-| bg     | background | color      | 背景色，默认值是ffffff7f [g] |             |
-| b      | bottom     | \d         | 图片设置margin bottom [v]    | a.png?b=10  |
-| r      | right      | \d         | 图片设置margin right [h]     | a.ong?r=10  |
+| 参数名 | 参数全名 | 参数的值   | 意义与作用                   | 使用实例    |
+|--------|----------|------------|------------------------------|-------------|
+| esc    | escape   | ''         | 图片无需拼图                 | a.png?esc   |
+| way    | h        | horizontal | 排列方式水平排列 [g]         | a.png?way=h |
+| way    | v        | vertical   | 垂直排列，默认方式[g]        | a.png?way=v |
+| id     | id       | 0-9        | 分组id，id相同的图片合并一起 | a.png?id=1  |
+| bottom | bottom   | \d         | 图片设置margin bottom [v]    | a.png?b=10  |
+| right  | right    | \d         | 图片设置margin right [h]     | a.png?r=10  |
+| base   | base     | ''         | 图片放在最前面               | a.png?base  |
+| end    | end      |            | 图片放着最后面               | a.png?end   |
+| line   | line     |            | 图片独占一行，在close模式下  | a.png?line  |
 说明：表格中，[g]标志表示为组范围内定义，一组只需定义定一个出现的图片。[h]标
 志说明，只有在水平布局[horizontal]下才有效，[v]表示只在垂直布局[vertical]有
 效。其他都是针对单个图片设置的
+
+==== 图片分组规则 ====
+
+默认情况下，所有的图片分在同一个组，合成一张图片，需要额外分组，则在相应背景图图
+片加上一个`id=\d`的参数，`\d`表示数字，从1开始计数，默认的sprite图片，id等于0，
+不需要写
 
 ==== url参数的位置 ====
 
@@ -125,8 +153,8 @@ url参数中，在[g]下的参数，默认情况下，是读取页面第一次�
 背景图的位置信息，经过3个步骤的判断计算来确定的：
 
 - 首先是从background-position中获取到top，和left的位置，position 如果没有写top，
-  left，默认都是0。top和left定义不明确，比如使用相对位置也可能导致图片位置不对。
-  position识别一下属性`left, 0, 100%, 50%, right, top, bottom,\dpx` \d表示数字。
+  left，默认都是0。top和left定义不明确，比如使用相对位置可能导致图片位置不对。
+  position识别以下属性`left, 0, 100%, 50%, right, top, bottom,\dpx` \d表示数字。
 
 - 第二步，根据图片本身的宽高，加上top和left的偏移，获得当前图片应该占有的空间
 
@@ -134,6 +162,7 @@ url参数中，在[g]下的参数，默认情况下，是读取页面第一次�
   大小的修正，分两种方式，第一，使用手动设置`b=xx||r=xx`，标明底部或右边需要的空
   间。第二种，根据当前图片所在css规则的`height, width, line-height`来设置，比如
   上面一个例子中，有个css规则`width: 180px; height: 180px;`，可以确定背景图高宽。
+  如果这两种方式都没有设置，在right和bottom默认给10像素间距。
 
 前面两步确定了三个方向的位置，最后一步确定最后一个方向的间距。因为拼图是垂直或水
 平方式，有一个方向是无需控制的。在垂直布局下，第三步只确定底部空间高度，水平布局
@@ -142,28 +171,33 @@ url参数中，在[g]下的参数，默认情况下，是读取页面第一次�
 ==== 背景图repeat ====
 
 repeat不能同时和定位使用，也就是，有repeat，必须是position:0 0，这样的形式。重复
-的单位是重复图片的倍数，如果图片很大，可能大致图片重复以后高度宽度多出不少。
+的单位是重复图片的倍数，如果图片很大，可能大致图片重复以后高度宽度多出不少。默认
+情况下，不写repeat属性，在css解释用，是表示图片重复，不过在大多数情况下，不写
+repeat 是因为开发者懒得写，同时背景图大小和所在的div大小一致，repeat和no-repeat
+意义一样，所以，joycss默认解释repeat为no-repeat，如果有 repeat的图片，将无法拼图
+，如果是repeat-x 或者repeat-y的方式，请不用省略。
 
 ==== sprite图片合并规则 ====
 
 sprite图片名是文件名加上spriteId加上-sprite组成的，比如文件a.css，拼图后生成的
-图片地址是`a-sprite.png, a1-sprite.png`。
-
-第三步：通过node调用
+图片地址是`a-sprite.png, a1-sprite.png`。spriteId构成是和文件名同名，如果一个css
+中有多个sprite图片，那么第二个开始加上数字，数字从1开始计数。
 
 === 依赖 ===
 
 需要nodejs和php cli支持，php需要有gd库支持。
 
-=== 其他 ===
+=== 项目中使用到的其他开源代码 ===
 
 非常感谢Alexander Kaupp提供的php版本
-[smartsprite](http://www.tanila.de/smartsprite/index.php), 如果没有这个拼图过程
+[[http://www.tanila.de/smartsprite/index.php|smartsprite]], 如果没有这个拼图过程
 的api，joycss还是在摸索如何拼图中，smartsprite提供了很好的拼图功能
 ，`src/graph/smartsprite.php`中，把smartsprite的拼图功能独立出来，通过
 `src/graph/tpl.json`这样的json文件作为数据源，php版的smartsprite完成图片处理过程
 ， node执行css分析过程。
 
 此外,`lib/PropertyValuePart.js`使用了
-[nzakas/parser-lib](https://github.com/nzakas/parser-lib) 中的
-`src/css/PropertyValuePart.js`，一个很好的css value读取代码。
+[[https://github.com/nzakas/parser-lib|nzakas/parser-lib]] 中的
+`src/css/PropertyValuePart.js`，一个很好的css value读取代码。紧凑拼图使用了，
+[[https://github.com/jakesgordon/bin-packing|jakesgordon/bin-packing]]的算法，
+代码位置`lib/packer.js`。

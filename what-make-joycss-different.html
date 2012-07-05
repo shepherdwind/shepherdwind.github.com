@@ -28,7 +28,7 @@
 
 <p>
 joycss是一个基于node和php的css自动拼图工具，本文主要说明joycss的不同于其他拼图
-工具的一些特点，使用文档，请移步<a href="joycss.html">joycss</a>。
+工具的一些特点与使用方式，使用文档，请移步<a href="joycss.html">文档</a>。
 </p>
 
 <p>
@@ -37,6 +37,174 @@ joycss是一个基于node和php的css自动拼图工具，本文主要说明joyc
 smartsprite 必须看着文档写注释，cssgaga使用拖拽，还不支持mac，linux，不支持自动
 化发布集成。
 </p>
+
+<h3 id="toc_0.0.1">工作方式</h3>
+
+<p>
+joycss的工作方式是，首先开发者写好一个css文件，图片使用一个一个碎图。然后运行
+<code>joycss xx.css</code>，看一下效果，尝试使用其他的命名参数，选择最满意的拼图方式。然后
+，修改一些可能无法完成拼图的情况，比如，去掉某个图片等，这样的操作一般都很少。大
+多少css不需要修改，就可以直接完成sprite过程。
+</p>
+
+<p>
+如果有拼图出现一些问题，请看下文的，joycss所无法处理的情况。
+</p>
+
+<h3 id="toc_0.0.2">默认假设</h3>
+
+<p>
+joycss为了做到尽可能使用简单，假设以下情况是最普通，最常用的情况：一个css文件需
+要处理的css文件，里面所有图片(除了http请求的图片)都是需要做sprite拼图的，并且图
+片的定位可以通过背景图所在的css规则中确定。
+</p>
+
+<p>
+对背景图定位的假设，如果背景图所占的空间由图片本身大小和left、top、right、bottom
+的间距构成，left和top间距可以通过background-position获得，right通过计算背景图所
+在 box的宽度获得，如果取得宽度，那么图片使用紧凑拼图，如果没有宽度，那么图片占一
+行，如果是紧凑拼图，right预留10px宽度。对于bottom，通过 height, line-height,
+padding来计算，如果这些信息都没有，无法确定height，bottom预留 10px高度。
+</p>
+
+<p>
+安照这样的默认情况，一个css文件是不需要做任何处理，可以通过joycss生成sprite合成
+后的样式和图片。当然，也许会说，需要有一些自定义的情况，比如一个图片不需要做拼图
+，这时候就需要使用url参数来通知joycss了，过滤一个图片在图片url后面假设一个<code>esc</code>
+的参数，就像这样<code>background: url(a.png?esc) no-repeat</code>，遇到这样的情况，这个图片
+就不会被合并了。其他情况，同样如此，需要通过url参数来告知joycss应该如何处理。url
+参数的使用会尽可能简单，因为大多数情况下，都和默认假设相符，只在某些情况才需要开
+发者加url参数。
+</p>
+
+<h3 id="toc_0.0.3">joycss所无法处理的情况</h3>
+
+<ul>
+<li>
+背景图中本身就有sprite图片，这个最容易引起问题，本身已经做过一次拼图的，使用
+  background-position来定位的样式，如果只有一个sprite图，可以在此图后面追加，请
+  在图片url中声明<code>?base</code>, 这样sprite图所定义的背景定位保持原有状态，新的往后面追加
+  。如果，是有两个sprite，暂时无法支持同时修改两个sprite图片，请把这两个sprite增
+  加到过滤的图片范围，在图片的url中增加参数<code>?esc</code>。
+
+</ul>
+  
+<ul>
+<li>
+同一张图片在多处使用，并且背景定位不一致，joycss支持一个图片在多处使用，不过，
+  要求使用方式一致，背景定位等等。如果定位方式有差异，实际上和第一个问题一样了，
+  图片本身就是sprite方式被使用了。请把不同的图片copy一份，换个名字。
+
+</ul>
+  
+<ul>
+<li>
+sprite图片有覆盖情况，这种情况肯定是因为background-position使用了负值，如果是
+  碎图，应该不会出现负值定位的情况的。请检查css文件，去掉负值定位。
+
+</ul>
+
+<ul>
+<li>
+css中没有声明高度，这种情况下，top和left定位是可以通过background-position来定位
+  的，而right可以通过宽度来定位，如果没有宽度，图片独自占有一行，所以不会有问题，
+  只有bottom的空隙定位，如果没有高度没法定位，此时，joycss会默认设置10px的间距，
+  如果，10px间距不够，自行在背景图url中增加参数设置<code>?bottom=100</code>
+
+</ul>
+  
+<ul>
+<li>
+背景定位使用相对定位，比如10%，这种情况无法计算，对于百分号定位，只支持0 50
+  100 三种。背景图使用负值，同样会有问题，如果使用负值，可能出现sprite图片相互覆
+  盖的情况。
+
+</ul>
+  
+<ul>
+<li>
+背景图可能会被覆盖，这种情况很难被发现。sprite的样式会最终被写在页面顶部，图片
+  所在的css样式中，只写了background-position，和repeat，在这中间，如果有使用
+  background，background样式会被覆盖。比如：
+<pre css>
+.comment-hd .sort .active,
+.comment-hd .sort .disable{
+  background:*fff;
+  display:block;
+  height:19px;
+  line-height:19px;
+  padding:0px 27px 0px 5px;
+}
+.comment-hd .sort .active{
+  background:*fff url(../img/sort.png) 67px 4px no-repeat;
+  color:*666;
+}
+</pre>
+  在这里，`.comment-hd .sort
+  .active`中的background将被替换为background-position, 而前面的一个background定
+  义将覆盖sprite样式中定义的background-image,最终效果没有背景图。这种情况很难发
+  现，尽量不要使用background来定义背景色吧。使用命令 <code>joycss xx.css -i</code>或者
+  <code>joycss xx.css --important</code>设置sprite规则增加important，这样可以避免。
+
+</ul>
+ 
+<ul>
+<li>
+背景图的repeat属性没有写，没有写repeat，安装正常情况下，css解析为repeat，但是
+  大多数情况下，背景图是不会用repeat的，不写repeat只是因为box本身大小和图片一样，
+  repeat和没有repeat一样，这时候，默认设置为no-repeat，如果有些图片确实需要使用
+  repeat，请不要省略。垂直布局支持repeat-x，水平布局支持repeat-y。
+
+</ul>
+  
+<ul>
+<li>
+图片拼合以后失真问题，使用png8拼图，颜色相近的图片可能会相互融合，比如橘红色
+  和黄色，如果页面很多黄色的图片，拼图以后，橘红色的图片也会变成黄色的了。混色的
+  问题，和图片所处的位置没有关系。如果使用png24模式拼图，就不会有问题，但ie6无法
+  识别， ie6只能继续回归到png8。png24 拼图使用命名<code>joycss xx.css -a</code>或者
+  <code>joycss xx.css --alpha</code>。或者，对图片进行分组，手动避免颜色混合，分组使用id作
+  为参数。
+
+</ul>
+ 
+<h3 id="toc_0.0.4">支持的特性</h3>
+
+<p>
+根据现有的需求，主要实现以下特性：
+</p>
+<ul>
+<li>
+sprite分组支持，可以在同一个css文件合并成多个sprite图片
+
+<li>
+sprite支持垂直和水平两种布局方式，使用非紧密拼图，和smartsprite效果一致
+
+<li>
+x或者y方向图片平铺支持，图片水平排列支持y方向拼图，垂直排列则相反
+
+<li>
+支持png8和png24背景透明，默认情况下，使用png8透明
+
+<li>
+支持通过在css规则中的line-height或者height，width等属性，定位图片应该的位置
+
+<li>
+sprite图片位置自定义设置，所有的配置都通过背景图url参数方式，比如：<code>a.png?id=1</code>
+
+</ul>
+
+<p>
+计划中需要实现的功能
+</p>
+<ul>
+<li>
+开发模式到发布过程的简单切换——通过结合Plum实现
+
+<li>
+支持在已有sprite图片上增加或修改sprite图片
+
+</ul>
 
 <p>
 joycss主要有以下几个特殊之处：
@@ -79,25 +247,7 @@ joycss主要有以下几个特殊之处：
 主要就是这些了，不知道读者觉得如何，还有什么功能你觉得应该有呢。
 </p>
 
-<h3 id="toc_0.0.1">默认假设</h3>
-
-<p>
-joycss为了做到尽可能使用简单，假设以下情况是最普通，最常用的情况：一个css文件需
-要处理的css文件，里面所有图片(除了http请求的图片)都是需要做sprite拼图的，并且图
-片的定位可以通过背景图所在的css规则中确定。
-</p>
-
-<p>
-安装这样的默认情况，一个css文件是不需要做任何处理，可以通过joycss生成sprite合成
-后的样式和图片。当然，你也许会说，我要自定义怎么办，一个图片我不想做拼图，这个时
-候就需要使用url参数来通知joycss了，过滤一个图片在图片url后面假设一个<code>esc</code>的参数
-，就像这样<code>background: url(a.png?esc) no-repeat</code>，遇到这样的情况，这个图片就不会
-被合并了。其他情况，同样如此，需要通过url参数来告知joycss应该如何处理。url参数的
-使用会尽可能简介，因为大多数情况下，都和默认假设相符，只在某些情况才需要开发者加
-url参数。
-</p>
-
-<h3 id="toc_0.0.2">对sprite过的css修改</h3>
+<h3 id="toc_0.0.5">对sprite过的css修改</h3>
 
 <p>
 这种情况是，比如一个已经手动拼图好的css文件，样式是做个sprite处理的了，以前是手
@@ -111,8 +261,6 @@ sprite 的样式修改了。最简单的方式是追加，追加只会在原有�
 修改sprite有时候可能会产生问题，比如某个图片使用的定位方式不是基于图片左上点，而
 是使用<code>0 -100%</code> 这样的情况需要使用者自己判断了。不过，还是会有一些情况有用的。
 </p>
-
-<h3 id="toc_0.0.3">css意义的分析</h3>
 
 <p>
 css意义的分析，主要通过<code>src/cssReader.js</code>完成的，cssReader使用一个对象的三个属性

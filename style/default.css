@@ -13,7 +13,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color:#222;
   color: #f3f3f3;
-  margin:0 0 10px;
+  margin:15px 0 5px;
 }
 
 p, ul, ol, table, pre, dl {
@@ -163,6 +163,7 @@ pre {
   background: #f8f8f8;  
   border-radius:5px;
   border:1px solid #e5e5e5;
+  margin: 10px 0;
   overflow-x: auto;
   margin-bottom: 10px;
 }
