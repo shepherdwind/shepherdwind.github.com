@@ -283,6 +283,21 @@ A1+B1+C3
 
 算法实现[[https://gist.github.com/3074516|这里]]，[[http://jsfiddle.net/cctvu/9Y54x/|jsfiddle]]。
 
+=== 算法演示 ===
+
+仅支持高级浏览器
+
+{{{class="html J_run" data-js="./js/path.js"
+第一种算法：
+<br>
+<div class="ui-inline-block" id="J_demo"></div>
+<br>
+第二种算法
+<div class="ui-inline-block" id="J_demo_1"></div>
+<div id="J_open_way"></div>
+  }}}
+
+
 === 结语 ===
 
 只要善于去发现，还能能够找到一些有意思的解决问题思路的。第二种算法，思路还是很

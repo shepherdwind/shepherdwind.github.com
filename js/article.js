@@ -131,6 +131,8 @@ KISSY.add('run', function(S){
       var wrapEl = DOM.create('<div class="alert alert-info">');
       DOM.html(wrapEl, S.unEscapeHTML(html));
       DOM.insertBefore(wrapEl, el);
+      var js = DOM.attr(el, 'data-js');
+      if (js) S.getScript(js);
     });
   }
 
