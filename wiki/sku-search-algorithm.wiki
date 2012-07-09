@@ -5,6 +5,8 @@
 来越复杂和重要，偶尔，也能遇到一些算法上的问题。本文，所要讨论的，就是这样一样问
 题。
 
+=== 什么是SKU ===
+
 问题来自垂直导购线周会的一次讨论，sku组合查询，这个题目比较俗，是我自己取得。首
 先，看下什么是sku，来自维基百科的解释：
     最小存货单位([[http://en.wikipedia.org/wiki/Stock-keeping_unit|Stock Keeping Unit]])
@@ -19,20 +21,269 @@
 | 黄色   | 64G   | 1 year    |          | 2500mAh   |
 | 蓝色   | 128G  |           |          |           |
 sku: 白色 + 16G + 3 month + 3.7 + 2100mAh
-就这么一款可以提供5种颜色，5中容量，4中保修期限， 3中屏幕尺寸，4中电池容量的
-手机，我们假设它存在，叫xphone。表格中，加粗的5种属性，组合在一起，构成一个sku。
-现在，应该清楚什么是sku了吧。
+就这么一款可以提供5种颜色，5种容量，4种保修期限， 3种屏幕尺寸，4种电池容量的手机
+，我们假设它存在，叫xphone。表格中，加粗的5种属性，组合在一起，构成一个sku。现在
+，应该清楚什么是sku了吧。可以把xphone的规格参数看成一个JS的构造器，每一个sku，对
+xphone函数进行实例化，返回的一个对象就是一个sku。不过，这和一部手机的概念有一些
+区别，一个sku对应多个手机，sku是描述手机的最小单位，比如说学校，在学校里面最小教
+学单位是班级，那么一个班级可以看做一个sku。
 
-下面，问题是，后端返回sku所对应的价格数目，前端需要控制用户选择时候的交互，
-比如，我选了白色，如何没有白色16G的，那么16G那个按钮应该灰掉，禁止选择了吧。
-如果，选择了一个sku组合，那么，应该显示价格吧。
+=== 问题描述 ===
 
-问题大概描述清楚了吧。似乎没什么问题，似乎很简单嘛。为了方便分析，首先，还是
-把问题抽象一下吧：
-| A  | B  | C  | D  | E  |
-|----|----|----|----|----|
-| a1 | b1 | c1 | d1 | e1 |
-| a2 | b2 | c2 | d2 | e2 |
-| a3 | b3 | c3 | d3 | e3 |
-| a4 | b4 | c4 |    | e4 |
-| a5 | b5 |    |    |    |
+下面，为了描述问题，我首先假设一个产品属性组合2x2，用`[[a, A], [b, B]]`表示，那
+么，sku组合为`[ab, Ab, Ab, AB]`，也是2x2，4个sku。现在我们知道sku对应的数目和价
+格，依然用js对象来描述为：
+{{{javascript 
+  {
+    ab: {amount: 10, price: 20}
+    aB: {amount: 10, price: 30}
+    AB: {amount: 10, price: 40}
+  }
+  }}}
+这个的数据说明了，Ab是没有货存的，ab, aB, AB分别有10个货源在。那么，当用户对商品
+进行选择的时候，如果首先选择A，那么，b应该显示为不可选择状态，因为Ab是没有货的。
+同样，如果选择了b，那么A应为灰掉，因为Ab还是没有值的。可能的几种状态如下：
+
+{{{class="html J_run"
+<div class="ui-inline-block">
+  初始状态
+  <div class="group">
+    <span class="text">属性1：</span>
+    <button id="A" class="btn">A</button>
+    <button id="a" class="btn">a</button>
+  </div>
+  <div class="group">
+    <span class="text">属性2：</span>
+    <button id="B" class="btn">B</button>
+    <button id="b" class="btn">b</button>
+  </div>
+</div>
+<div class="ui-inline-block">
+  1. 选中b，A禁止
+  <div class="group">
+    <span class="text">属性1：</span>
+    <button id="A" class="btn disabled">A</button>
+    <button id="a" class="btn">a</button>
+  </div>
+  <div class="group">
+    <span class="text">属性2：</span>
+    <button id="B" class="btn">B</button>
+    <button id="b" class="btn active btn-warning">b</button>
+  </div>
+</div>
+<div class="ui-inline-block">
+  2. 选中A，b禁止
+  <div class="group">
+    <span class="text">属性1：</span>
+    <button id="A" class="btn active btn-warning">A</button>
+    <button id="a" class="btn">a</button>
+  </div>
+  <div class="group">
+    <span class="text">属性2：</span>
+    <button id="B" class="btn">B</button>
+    <button id="b" class="btn disabled">b</button>
+  </div>
+</div>
+<div class="ui-inline-block">
+  3. 选中AB，价格为40
+  <div class="group">
+    <span class="text">属性1：</span>
+    <button id="A" class="btn active btn-warning">A</button>
+    <button id="a" class="btn">a</button>
+  </div>
+  <div class="group">
+    <span class="text">属性2：</span>
+    <button id="B" class="btn active btn-warning">B</button>
+    <button id="b" class="btn disabled">b</button>
+  </div>
+</div>
+  }}}
+  
+问题：用户选择某个属性后，如何判断哪些属性是可以被选择的。当sku属性只是2x2的时
+候，还是很容易计算的。但是，如果情况变得复杂，比如4x4x4x5这样的情况，要判断用户
+的那些行为是可行的，还是会复杂很多的。下面看算法实现吧，还是用2x2这种最简单的形
+式作为参考。为了方便描述，下面使用`result = {ab: ...}`表示sku对应的价格和数目的
+数据对象，使用`item`表示一个sku属性下的一个元素，`items = [[a, A], [b, B]]`表示
+所有sku属性元素。
+
+=== 第一种算法 ===
+
+初始条件::
+:: 已知所有sku属性的数组`items`和sku所对应的价格信息`result`
+:: 用户选择了`item` B，使用数组`selected=['B']`表示，`selected`可以为空数组
+
+算法过程::
+:: 1. 循环所有sku属性`forEach(result, (curitems, attr)->)`，使curitems等于属性对应的所有元素，attr等于属性id。
+:: 2. 克隆数据`attrSelected = selected`
+:: 3. 判断属性`attr`中是否有元素在数组`attrSelected`中，如果存在，从`attrSelected`去掉存在的元素
+:: 4. 循环属性下的元素`forEach(curitems, (item)->`，使得item等于单个属性的值
+:: 5. 把 `attrSelected`和`item`组合成sku
+:: 6. 循环`result`，判断第五组成的sku在result中是否存在，如果存在，退出循环4，返回true，进入步骤8
+:: 7. 当前`item`设置为灰色，标志不可选择
+:: 8. 当前`item`为可选属性元素
+:: 9. 循环4和循环1完成，所有`item`状态标注完成，算法结束
+
+这个方式是最普通的算法实现了，非常直接，一个一个判断所有的`item`是否可以被选中，
+判断依据是`item`和`selected`的元素组合的sku是否在`result`数组中存在。在我们上面
+的例子中，在初始化的情况下，用户没有选中任何元素，那么循环过程，只需要判断`a, b, A, B`
+在`selected`是否存在。如果，用户选中了`b`，那么循环过程中，依次判断的sku组合是
+`ab, Ab, B`，存在的sku组合是`ab, aB, AB`，所以因为Ab组合没有能知道，所以，A需要
+标注为不可点。组合sku判断的时候，需要注意的是，因为B和选中的b在同一个属性中，所
+以组合的时候，需要去掉b，然后组合成B，这是第3步所主要完成的过程。
+
+这样的算法，很简单，但很繁琐，循环嵌套循环，可以简单分析一下算法复杂度。如果sku
+属性组合元素的总和数用m表示，结果数据长度为n，那么每次选择后，需要的算法大致步骤
+是m * n。这似乎不是很复杂，m * n而已，不过，每次判断一个sku组合是否和result中的
+组合匹配，却不是一个简单的过程，实际上，这可以看做是一个字符串匹配的一个算法了，
+最简单的还是使用正则匹配，m * n次正则匹配，这样就不怎么快了吧。正则表达式很不稳
+定，万一sku组合中有一些特殊字符，就可能导致一个正则匹配没能匹配到我们想要的表达
+式。
+
+ === 第一种算法的优化 ===
+
+经过讨论，第一种算法，有了优化的算法思路。 就第一种算法而言，正则匹配不够优雅，
+而且比较慢，而我们想要做的事情是比较一个组合是否包含于另外一个组合，用数学语言来
+描述，就是一个集合是否是另一个集合的子集，怎么来做这样的快速判断呢。
+
+现在问题可以简化为：假设一个集合A{a, b, c}和另外一个集合B{a, e}，如何快速判断B是
+否是A的子集。这个问题比较简单的方法是用B中所有元素依次和A中的元素进行比较，还是
+简单而粗暴的方式，比正则稍微快一些。对于集合中的元素，它们都以唯一的，通过这样的
+特性，我们可以把所有字母转换为一个质数，那么集合A可以表示为几个质数的积，B同样，
+B是否是A的子集，这个只需要将B除以A，看看是否可以整除，如果可以那么说明，B是A的子
+集。
+
+现在处理字符串就转换为处理乘法算法了，有了以上的分析，我们可以整理下算法过程：
+
+# 数据预处理，生成一组随机数，把所有item一一对应一个质数，把item组合转换为一几个
+  质数的积
+# 根据用户已经选择的item进行扫描所有的item，如果item已经被选中，则退出，如果没有，
+  则和所有已经选择的item进行相乘(特别注意，以选中的item需要去掉和当前匹配的item
+  在同一个类目中的item，因为一个组合不可能出现两个类目相同的item) ，这个乘机就是
+  上文中的集合B
+# 把集合B依次和sku组合构成的积(相当于上文中的集合A)进行相除，比较，如果整除，则
+  退出，当前匹配的sku可以被选中，如果一直到最好还没有匹配上，则不能被整除。
+  
+这样优化了一下看起来比较简单的思路，但是实现起来却一点都不容易，代码在[[https://gist.github.com/2141756|这里]]。
+算法也算简化了不少，不过这个预处理过程还是比较麻烦的，而且实际上，和第一种方案的
+解决的算法复杂度差不多，只是比较的时候使用的是乘除法，而第一种是正则匹配罢了。
+
+=== 第二种算法 ===
+
+后来又过了一周，这个问题被当成一个方案来继续讨论了。大家此时差不多都无话可说了，
+算法都有实现了，似乎没有什么其他可说的了。就在这个问题就如此结束的时候，正豪站出
+来了，说不管是第一种还是第一种方案的优化方案，每次用户进行选择，都需要重复计算一
+遍，这样实在太麻烦了。每次都对所有spu进行扫描，这样不是很好，能不能有其他的方式
+呢，能否更加直接判断出一个sku是否可以被选择呢。前面的算法，一个sku是否可以被选择
+，需要依次循环sku 组合的所有元素才可以判断的，这样的过程一定需要吗？
+
+第三种算法就这样诞生了，考虑到JavaScript中的对象属性访问是最快的了，那么对于如果
+能够直接从一个对象中读取到以选择的sku和需要匹配的sku组合对应的数目，那这样的算法
+简直就是不用时间啊。下面来详细描述。
+
+下面把问题复杂一下，初始条件如下：
+
+{{{class="html J_run"
+<div class="ui-inline-block">
+  初始状态，选中A1
+  <div class="group">
+    <span class="text">属性1：</span>
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button id="a" class="btn">A2</button>
+    <button class="btn">A3</button>
+    <button class="btn">A4</button>
+  </div>
+  <div class="group">
+    <span class="text">属性2：</span>
+    <button id="B" class="btn">B1</button>
+    <button id="b" class="btn">B2</button>
+    <button class="btn">B3</button>
+  </div>
+  <div class="group">
+    <span class="text">属性3：</span>
+    <button class="btn">C1</button>
+    <button class="btn">C2</button>
+    <button class="btn">C3</button>
+  </div>
+  <div class="group">
+    <button id="A" class="btn active btn-warning">A1</button>
+    = 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    + 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B2</button>
+    +
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B3</button>
+  </div>
+  <div class="group">
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    = 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    <button class="btn ">C1</button>
+    + 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    <button class="btn ">C2</button>
+    +
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    <button class="btn ">C3</button>
+  </div>
+  <div class="group">
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B2</button>
+    = 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B2</button>
+    <button class="btn ">C1</button>
+    + 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B2</button>
+    <button class="btn ">C2</button>
+    +
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B2</button>
+    <button class="btn ">C3</button>
+  </div>
+  <div class="group">
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B3</button>
+    = 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B3</button>
+    <button class="btn ">C1</button>
+    + 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B3</button>
+    <button class="btn ">C2</button>
+    +
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B3</button>
+    <button class="btn ">C3</button>
+  </div>
+  A1+B1+C1这样的组合可以直接从result中获得数据结果。
+</div>
+  }}}
+
+假如已经选中item为A1，那么现在要计算B1是否可以被选择，那么如果我们能够直接获取到
+A1和B1组合的所有商品数目，那么就能知道B1是否可以被选择了。A1和B1的组合是这样计算
+的，在上面描述的问题空间中，A1和B1的组合，可能有以下几种： A1+B1+C1, A1+B1+C2,
+A1+B1+C3
+
+这些组合就可以直接从已知的sku组合中获取信息啦，同样是对象属性查找，快得不得了。
+实际上， 对于任何一个sku和其他sku的组合都是可以通过同样的方式递归查找来实现获取
+其组合后的商品数目。这样的算法最大的优势是，计算过程是可以缓存的，比如计算A1是否
+可以被选中，那么肯定需要计算除A1+B1组合的数目，A1的数目是由A1+B1，A1+B2，A1+B3三
+个子集构成，这三个子集又可以拆分为更细的组合，然后这些所有的组合对应的商品数目都
+可以获取到了，下次需要判断A1+B2组合，则无需重复计算了。此外，我们可以清晰的获取
+组合相关的信息，比如某个sku下面可以有的商品数目。
+
+算法实现[[https://gist.github.com/3074516|这里]]，[[http://jsfiddle.net/cctvu/9Y54x/|jsfiddle]]。
+
+=== 结语 ===
+
+只要善于去发现，还能能够找到一些有意思的解决问题思路的。第二种算法，思路还是很
+奇妙的。或者谁有更加快速简单的算法，也可以交流下。

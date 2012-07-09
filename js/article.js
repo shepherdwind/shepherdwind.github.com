@@ -120,7 +120,24 @@ KISSY.add('market/scrollFollow', function(S){
 
 });
 
-KISSY.use('market/scrollFollow', function(S, follow){
+KISSY.add('run', function(S){
+  var config = {
+    runEl: '.J_run'
+  };
+  var DOM = S.DOM;
+  function init (){
+    var els = S.all(config.runEl).each(function(el){
+      var html = DOM.html(el);
+      var wrapEl = DOM.create('<div class="alert alert-info">');
+      DOM.html(wrapEl, S.unEscapeHTML(html));
+      DOM.insertBefore(wrapEl, el);
+    });
+  }
+
+  return init;
+});
+
+KISSY.use('market/scrollFollow, run', function(S, follow, run){
   var el = S.one('#J_nav');
   var data = {};
   S.all('h3').each(function(el){
@@ -155,4 +172,6 @@ KISSY.use('market/scrollFollow', function(S, follow){
 
   S.all('pre').attr('contentEditable', '');
   S.all('pre').attr('readonly', true);
+
+  run();
 });
