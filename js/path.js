@@ -34,12 +34,13 @@
     },
     /**
      * @param {array} arrCd [4, 4, 5, 6, 3]
-     * @param {array} opt_prime array
+     * @param {number} opt_nums  
      * @return {array} array of condition
      */
-    getMaps: function(arrCd, opt_primes){
+    getMaps: function(arrCd, opt_nums){
       var i, j = 0, ret = [];
-      opt_primes = opt_primes || this.getPrime(300);
+      var time = Date.now();
+      opt_primes = this.getPrime(opt_nums) || this.getPrime(300);
 
       for (i = 0; i < arrCd.length; i++) {
         var n = 0;
@@ -371,6 +372,8 @@
       var html = '共进行' + this.PathFinder.count + '次运算，耗时' +
                  this.PathFinder.time + 'ms';
       var light = this.PathFinder.light;
+      var useReg = this.PathFinder.useReg;
+      if (!useReg) { html += '. result乘积最大为' + this.maxNum; }
       maps.forEach(function(amap, i){
         html += '<div class="group"><span class="text">属性' + (i + 1) + '：</span>';
         amap.forEach(function(num, j){
@@ -408,12 +411,22 @@
     initPath: function(useReg){
       this.PathFinder = new PathFinder(this.maps, this.ways, useReg);
       var ways = this.PathFinder.getWay();
+      if (!useReg){ 
+        this.maxNum = Math.max.apply(null, this.PathFinder.openway); 
+      }
       this.rendUi(this.maps, ways);
     }
   };
 
-  var maps = util.getMaps([8, 8, 8, 8, 8, 8, 8]);
-  var openway = openWay(maps);
-  new Demo(maps, util.cloneTwo(openway), true);
-  new Demo(maps, util.cloneTwo(openway), false, 'J_demo_imporve');
+  var mapsEl = document.getElementById('J_input');
+  var numsEl = document.getElementById('J_nums');
+  function render(){
+    var mapStr = mapsEl.value;
+    var maps = util.getMaps(eval(mapStr), numsEl.value);
+    var openway = openWay(maps);
+    new Demo(maps, util.cloneTwo(openway), true);
+    new Demo(maps, util.cloneTwo(openway), false, 'J_demo_imporve');
+  }
+  render();
+  document.getElementById('J_sub').onclick = render;
 })();

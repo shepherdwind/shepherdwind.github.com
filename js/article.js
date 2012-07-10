@@ -132,7 +132,10 @@ KISSY.add('run', function(S){
       DOM.html(wrapEl, S.unEscapeHTML(html));
       DOM.insertBefore(wrapEl, el);
       var js = DOM.attr(el, 'data-js');
+      var css = DOM.attr(el, 'data-css');
       if (js) S.getScript(js);
+      if (css) S.getScript(css);
+      DOM.remove(el);
     });
   }
 
