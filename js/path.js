@@ -125,10 +125,11 @@
     return r;
   }
 
-  function PathFinder(maps, openway){
+  function PathFinder(maps, openway, useReg){
     this.openway = openway || [];
     //map of primes
     this.maps = maps || [];
+    this.useReg = useReg;
 
     this._way = {};
     //light of array, 0 mean not availabe, 1 mean availabe, map to the this.maps
@@ -158,7 +159,8 @@
       }
 
       for (i = 0; i < this.openway.length; i++) {
-        this.openway[i] = eval(this.openway[i].join('*'));
+        this.openway[i] = this.useReg ? 
+        this.openway[i].join(':') : eval(this.openway[i].join('*'));
       }
 
       this._check();
@@ -198,11 +200,28 @@
 
     _checkItem: function(item, selected){
       var openway = this.openway;
-      var val = item * selected;
-      for (var i = 0; i < openway.length; i++) {
-        this.count++;
-        if (openway[i] % val === 0){
-          return 1;
+      var val;
+      if (!this.useReg){
+        val = item * selected;
+        for (var i = 0; i < openway.length; i++) {
+          this.count++;
+          if (openway[i] % val === 0){
+            return 1;
+          }
+        }
+
+      } else {
+        val = [item].concat(selected);
+        val.sort(function(a, b){ return a - b; });
+        var reg = new RegExp(val.map(function(i){
+          return '(' + i + ')';
+        }).join('[:0-9]*'));
+
+        for (var j = 0; j < openway.length; j++) {
+          this.count++;
+          if (reg.test(openway[j])){
+            return 1;
+          }
         }
       }
 
@@ -214,6 +233,7 @@
       var _way = this._way;
       var x = 0;
       var ret = 1;
+      var retArr = [];
 
       if (selected.length){
         for (var j = 0; j < selected.length; j++) {
@@ -222,11 +242,14 @@
           //需要忽略。
           //必须选择了 [1, 2],检测的项目是[1, 3]，不可能存在[1, 2]和[1, 3]
           //的组合，他们在同一行
-          if (_way[s][0] !== xpath) ret = ret * s;
+          if (_way[s][0] !== xpath) {
+            ret = ret * s;
+            retArr.push(s);
+          }
         }
       }
 
-      return ret;
+      return this.useReg? retArr: ret;
     },
 
     /**
@@ -314,15 +337,17 @@
   };
 
   Demo.prototype = {
-    uiEl: document.getElementById('J_demo'),
-    wayEl: document.getElementById('J_open_way'),
-    init: function(maps){
-      this.maps = maps;
-      var ways = openWay(maps);
-      this.ways = ways;
-      this.rendWays(ways);
+    init: function(maps, openway, useReg, uiEl){
 
-      this.initPath();
+      uiEl = uiEl || 'J_demo';
+      this.uiEl = document.getElementById(uiEl);
+      this.wayEl = document.getElementById('J_open_way');
+      this.maps = maps;
+      var ways = openway;
+      this.ways = ways;
+      if (uiEl == 'J_demo') this.rendWays(ways);
+
+      this.initPath(useReg);
       this.bind();
     },
     bind: function(){
@@ -349,12 +374,16 @@
       maps.forEach(function(amap, i){
         html += '<div class="group"><span class="text">属性' + (i + 1) + '：</span>';
         amap.forEach(function(num, j){
+          if (num < 10) numV = '00' + num;
+          else if (num < 100) numV = '0' + num;
+          else numV = num;
+
           if (light[i][j] == 1){
-            html += '<button data-id="' + num + '" class="btn">' + num + '</button>';
+            html += '<button data-id="' + num + '" class="btn">' + numV + '</button>';
           } else if(light[i][j] == 2) {
-            html += '<button data-id="' + num + '" class="btn active btn-warning">' + num + '</button>';
+            html += '<button data-id="' + num + '" class="btn active btn-warning">' + numV + '</button>';
           } else {
-            html += '<button data-id="' + num + '" class="btn disabled">' + num + '</button>';
+            html += '<button data-id="' + num + '" class="btn disabled">' + numV + '</button>';
           }
         });
         html += '</div>';
@@ -366,20 +395,25 @@
       this.ways = ways;
       ways.forEach(function(way){
         html += '<div class="way ui-inline-block" id="' + way.join(':') + '">';
+        html += way.join(':');
+        /*
         way.forEach(function(item){
           html += '<button class="btn">' + item + '</button>';
         });
+        */
         html += '</div>';
       });
       this.wayEl.innerHTML = html;
     },
-    initPath: function(){
-      this.PathFinder = new PathFinder(this.maps, this.ways);
+    initPath: function(useReg){
+      this.PathFinder = new PathFinder(this.maps, this.ways, useReg);
       var ways = this.PathFinder.getWay();
       this.rendUi(this.maps, ways);
     }
   };
 
-  var maps = util.getMaps([8, 7, 4, 7]);
-  new Demo(maps);
+  var maps = util.getMaps([8, 8, 8, 8, 8, 8, 8]);
+  var openway = openWay(maps);
+  new Demo(maps, util.cloneTwo(openway), true);
+  new Demo(maps, util.cloneTwo(openway), false, 'J_demo_imporve');
 })();
