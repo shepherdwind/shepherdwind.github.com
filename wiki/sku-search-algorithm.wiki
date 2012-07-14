@@ -111,6 +111,8 @@ xphone函数进行实例化，返回的一个对象就是一个sku。不过，�
 首先来一个演示吧，仅支持高级浏览器。对于第一算法，使用正则匹配，不是很完善，有些
 不准，仅仅是演示，正则表达式写的不好，不用在意。
 
+下面灰色按钮表示不可选，白色表示可选，红色为选中状态。演示框最下面是可用的sku组合。
+
 {{{class="html J_run" data-js="./js/path.js"
 <p class="controll-bar">
 <label for="J_input">item数组</label>
@@ -171,9 +173,9 @@ xphone函数进行实例化，返回的一个对象就是一个sku。不过，�
 现在问题可以简化为：假设一个集合A{a, b, c}和另外一个集合B{a, e}，如何快速判断B是
 否是A的子集。这个问题比较简单的方法是用B中所有元素依次和A中的元素进行比较，还是
 简单而粗暴的方式，比正则稍微快一些。对于集合中的元素，它们都以唯一的，通过这样的
-特性，我们可以把所有字母转换为一个质数，那么集合A可以表示为几个质数的积，B同样，
-B是否是A的子集，这个只需要将B除以A，看看是否可以整除，如果可以那么说明，B是A的子
-集。
+特性，我们可以把所有字母转换为一个质数，那么 
+*集合A可以表示为集合元素(质数)的积，B同样， B是否是A的子集，这个只需要将B除以A，看看是否可以整除* ，
+如果可以那么说明，B是A的子集。
 
 现在处理字符串就转换为处理乘法算法了，有了以上的分析，我们可以整理下算法过程：
 
@@ -203,7 +205,7 @@ B是否是A的子集，这个只需要将B除以A，看看是否可以整除，�
 能够直接从一个对象中读取到以选择的sku和需要匹配的sku组合对应的数目，那这样的算法
 简直就是不用时间啊。下面来详细描述。
 
-下面把问题复杂一下，初始条件如下：
+下面把问题初始条件假设如下：
 
 {{{class="html J_run"
 <div class="ui-inline-block">
@@ -227,76 +229,34 @@ B是否是A的子集，这个只需要将B除以A，看看是否可以整除，�
     <button class="btn">C2</button>
     <button class="btn">C3</button>
   </div>
-  <div class="group">
-    <button id="A" class="btn active btn-warning">A1</button>
-    = 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B1</button>
-    + 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B2</button>
-    +
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B3</button>
-  </div>
-  <div class="group">
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B1</button>
-    = 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B1</button>
-    <button class="btn ">C1</button>
-    + 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B1</button>
-    <button class="btn ">C2</button>
-    +
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B1</button>
-    <button class="btn ">C3</button>
-  </div>
-  <div class="group">
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B2</button>
-    = 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B2</button>
-    <button class="btn ">C1</button>
-    + 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B2</button>
-    <button class="btn ">C2</button>
-    +
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B2</button>
-    <button class="btn ">C3</button>
-  </div>
-  <div class="group">
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B3</button>
-    = 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B3</button>
-    <button class="btn ">C1</button>
-    + 
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B3</button>
-    <button class="btn ">C2</button>
-    +
-    <button id="A" class="btn active btn-warning">A1</button>
-    <button class="btn ">B3</button>
-    <button class="btn ">C3</button>
-  </div>
-  A1+B1+C1这样的组合可以直接从result中获得数据结果。
 </div>
   }}}
 
 假如已经选中item为A1，那么现在要计算B1是否可以被选择，那么如果我们能够直接获取到
 A1和B1组合的所有商品数目，那么就能知道B1是否可以被选择了。A1和B1的组合是这样计算
 的，在上面描述的问题空间中，A1和B1的组合，可能有以下几种： A1+B1+C1, A1+B1+C2,
-A1+B1+C3
-
-这些组合就可以直接从已知的sku组合中获取信息啦，同样是对象属性查找，快得不得了。
+A1+B1+C3。这些组合就可以直接从已知的sku组合中获取信息啦，同样是对象属性查找，快
+得不得了。示例如下：
+{{{class="J_run html"
+  <div class="group">
+    A1选中状态下，判断B1是否可用，只需要查找A1 B1<br>
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    = 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    <button class="btn ">C1</button>
+    + 
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    <button class="btn ">C2</button>
+    +
+    <button id="A" class="btn active btn-warning">A1</button>
+    <button class="btn ">B1</button>
+    <button class="btn ">C3</button>
+  </div>
+  A1+B1+C1这样的组合，结果可以可以直接从result中获得数据结果。
+  }}}
 实际上， 对于任何一个sku和其他sku的组合都是可以通过同样的方式递归查找来实现获取
 其组合后的商品数目。这样的算法最大的优势是，计算过程是可以缓存的，比如计算A1是否
 可以被选中，那么肯定需要计算除A1+B1组合的数目，A1的数目是由A1+B1，A1+B2，A1+B3三
@@ -360,11 +320,11 @@ d，直接查找map对象中是否存在a, b, c, d。如果选择了a，那么�
 经过这样的优化，初始化的时候计算量也不大，这样第二种算法的实现就可以很好的完成任
 务了。可能这个map对象，可能还是会有点大。
 
-=== 结语 ===
+=== 结论 ===
 
 总的来说，比较好的方式是第一种算法的优化(也就是除法判断)和第二种算法。各自有其
-特点，都有其特色之处，除法判断把字符串匹配转换为数字运算，第二种算法使用字典查找。
-并且都能快速准确的计算出结果。
+特点，都有其特色之处，除法判断把 *字符串匹配转换为数字运算* ，第二种算法使用 *字典查找* 。
+并且都能 *快速准确* 的计算出结果。
 
 从算法速度来说，第一种算法复杂度是n * n * m，当然需要一个比较繁琐负责的质数对应
 转换过程，第二种算法复杂度是 n * n，其初始化过程比较复杂，最初的方式是n^n^，经过
