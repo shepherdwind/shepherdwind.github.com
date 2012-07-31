@@ -52,6 +52,12 @@
     opacity: @opacity / 100;
     filter: ~"alpha(opacity=@{opacity})";
   }
+  //背景透明.bgfade(#fff, 0.4);
+  .bgfade(@color, @fade){
+    background-color: fadeout(@color, 100-@fade*100);
+    @rgbahex: ~`function(color, fade){var t = (Math.round(255*fade)).toString(16).toUpperCase();t=t.length==1?'0'+t:t;return '#'+t+color.substr(1)}("@{color}","@{fade}")`;
+    filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr=@{rgbahex}, endColorstr=@{rgbahex},GradientType=0 )";
+  }
 </pre>
 
 <h3 id="toc_0.0.3">border实现三角</h3>
@@ -65,15 +71,15 @@
       font-size: 0;
       line-height: 0;
     }
-    .top(@w, @h, @color, @bg: #fff) {
-      border-left: @w solid @bg;
-      border-right: @w solid @bg;
+    .top(@w, @h, @color) {
+      border-left: @w solid dashed;
+      border-right: @w solid dashed;
       order-bottom: @h solid @color;
     }
 
-    .bottom(@w, @h, @color, @bg: #fff) {
-      border-left: @w solid @bg;
-      border-right: @w solid @bg;
+    .bottom(@w, @h, @color) {
+      border-left: @w solid dashed;
+      border-right: @w solid dashed;
       border-top: @h solid @color;
     }
   }
@@ -133,6 +139,12 @@
     opacity: @opacity / 100;
     filter: ~"alpha(opacity=@{opacity})";
   }
+  //背景透明.bgfade(#fff, 0.4);
+  .bgfade(@color, @fade){
+    background-color: fadeout(@color, 100-@fade*100);
+    @rgbahex: ~`function(color, fade){var t = (Math.round(255*fade)).toString(16).toUpperCase();t=t.length==1?'0'+t:t;return '#'+t+color.substr(1)}("@{color}","@{fade}")`;
+    filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr=@{rgbahex}, endColorstr=@{rgbahex},GradientType=0 )";
+  }
 
   .fontHead(){
     font-family:"\5FAE\8F6F\96C5\9ED1", arial;
@@ -146,15 +158,15 @@
       font-size: 0;
       line-height: 0;
     }
-    .top(@w, @h, @color, @bg: #fff) {
-      border-left: @w solid @bg;
-      border-right: @w solid @bg;
-      border-bottom: @h solid @color;
+    .top(@w, @h, @color) {
+      border-left: @w solid dashed;
+      border-right: @w solid dashed;
+      order-bottom: @h solid @color;
     }
 
-    .bottom(@w, @h, @color, @bg: #fff) {
-      border-left: @w solid @bg;
-      border-right: @w solid @bg;
+    .bottom(@w, @h, @color) {
+      border-left: @w solid dashed;
+      border-right: @w solid dashed;
       border-top: @h solid @color;
     }
   }
