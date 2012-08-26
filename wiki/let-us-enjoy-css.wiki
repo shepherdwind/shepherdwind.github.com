@@ -1,0 +1,48 @@
+%title css sprite技术与joycss
+%template article
+
+=== brief ===
+
+joycss是基于node和php的css自动拼图工具，css拼图是一个复杂繁琐的事情，在高级浏览
+器，大家已经可以尝试使用新的方式合并图片，减少请求数。不过，毕竟就传统互联网而已
+，对于 ie6，7的继续兼容还是必须有的。自动拼图是一个即将过时，但是依然需要有的技
+术。
+
+=== sprite技术发展 ===
+
+在做自动拼图工具之前，首先所关注的问题是，现有的技术发展与需要解决的问题。css自
+动拼图技术已经是一个古老的问题了，在国内大概最有名的要数smartsprite和cssgaga了。
+首先从这两个说起吧，拼图技术，完成的任务都一样，区别在于使用方式api，拼图算法的
+支持。这两者决定了一个拼图工具的实现，是否可用。
+
+首先看看smartsprite，是个java包，首先它是跨平台的，命令行工具，这两个特性决定了
+它是可以集成于发布过程，使用拼图工具，就像使用less一样，需要能够非常方便的从开发
+模式到发布模式的切换，过程中会有非常多的调试过程，为了保障自动拼图工具能够方便后
+续维护，就必须做到能够方便的编译发布，如果是命令行工具，做到这一点还算容易，可以
+和很多其他编译命令一起执行。当然，也可以通过开发者约定，规避上述问题，cssgaga就
+是这样的模式，下面再讨论。
+
+从使用api来看，smartsprite是通过css注释来与开发者交互的，这样的方式，实际上把拼
+图当成一种语法来写了。对于开发者，还是有一定的麻烦，毕竟写一个注释不是一件容易的
+事情。 api声明需要说明哪些图片需要被合并在一起，图片位置信息等，这些在smartsprite
+中需要分别声明，使用/**/方式。
+
+拼图方法上，smartesprite使用单行垂直布局或者水平布局，支持水平方向或者垂直方向图
+片重复。这可以称为单行布局，这也是最简单的sprite图片布局方式，把所有的图片水平平铺，
+或者垂直排列。这样可以确保水平或者垂直方向sprite不会被覆盖。缺点也比较明显，浪费了
+很多空间，虽然只是透明的背景，不过看着还是有些不爽。所有，有人尝试使用紧凑拼图，
+手动sprite都是使用紧凑拼图方式的，使用计算机当然也可以，cssgaga就是这么一个工具。
+
+=== cssgaga与紧凑拼图 ===
+
+=== sprite tools ===
+
+- [[https://github.com/flyerhzm/css_sprite|css_sprite]] ruby: images directory to css
+- [[https://github.com/One-com/assetgraph-sprite|assetgraph-sprite]] css like
+  syntax `-one-sprite-group: my-sprite-group`; js, require: node-canvas, packing 
+  algorithm: [[http://www.blackpawn.com/texts/lightmaps/|Packing Lightmaps]]
+- [[https://github.com/jakesgordon/sprite-factory|sprite-factory]], ruby,
+  directory, [[http://codeincomplete.com/posts/2011/5/7/bin_packing/|bin_packing]]
+- [[https://github.com/jorgebastida/glue/|glue]]: python : directory : 
+  bin_packing, [[http://www.aaronbarker.net/2010/07/diagonal-sprites/|diagonal-sprites]]
+- [[https://github.com/gistinc/sprite|sprite]] ruby: directory

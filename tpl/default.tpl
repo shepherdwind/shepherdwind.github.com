@@ -12,7 +12,7 @@
         <li><a href="./index.html">Home</a></li>
         <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
         <li><a href="./plum/">Plum</a></li>
-        <li><a href="./joycss.html">joycss</a></li>
+        <li><a href="http://joycss.org">joycss</a></li>
       </ul>
       <h2>%title%</h2>
     </div>

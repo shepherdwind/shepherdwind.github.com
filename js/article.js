@@ -151,6 +151,7 @@ KISSY.use('market/scrollFollow, run', function(S, follow, run){
     };
   });
 
+  /*
   S.all('h4').each(function(el){
     var id = el.attr('id');
     var id1 = id.slice(0, -2);
@@ -159,6 +160,7 @@ KISSY.use('market/scrollFollow, run', function(S, follow, run){
       data[id1]['subs'][id] = {html: el.html()};
     }
   });
+  */
 
   var tpl = '<li><a href="#{id}">{text}</a></li>';
   var html = '';
@@ -175,8 +177,8 @@ KISSY.use('market/scrollFollow, run', function(S, follow, run){
   //console.log(el.offset());
   new follow('#J_nav');
 
-  S.all('pre').attr('contentEditable', '');
-  S.all('pre').attr('readonly', true);
-
+  S.later(function(){
+    KISSY.EventTarget.fire('inited');
+  }, 310);
   run();
 });

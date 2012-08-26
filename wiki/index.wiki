@@ -18,7 +18,7 @@ github还是非常好用的工具，托管的一些项目已经不再维护了�
 ==== 维护中的项目 ====
 
 还在维护的项目基本通过gh-pages来管理自己的文档，此处只是简单的一个链接。
-- css拼图工具[[joycss]]
+- css拼图工具[[joycss]] [[joycss.org]]
 - [[http://git.shepherdwind.com/plum|Plum]]基于node的服务器，主要用于demo开发
  
 ==== 其他项目 ====
@@ -33,6 +33,7 @@ github还是非常好用的工具，托管的一些项目已经不再维护了�
 === 博客文章 ===
 
 - [[sku-search-algorithm|sku组合查找算法探索]]
+- [[let-us-enjoy-css|joycss:让css开发更容易]]
 
 === 一些笔记 ===
 
