@@ -8,14 +8,14 @@
     <title>%title%</title>
   </head>
   <body>
-  <div id="ribbon"><a href="https://github.com/shepherdwind/joycss">Fork me on GitHub</a></div>
+  <div id="ribbon"><a href="https://github.com/shepherdwind/plum">Fork me on GitHub</a></div>
     <header>
     <div class="header-wrap">
       <h2>%title%</h2>
       <ul class="main-nav">
         <li><span class="home">Home</span></li>
         <li class="blog"><a href="http://shepherdwind.com">Blog</a></li>
-        <li><a href="http://git.shepherdwind.com/plum/">Plum</a></li>
+        <li><a href="http://joycss.org">joycss</a></li>
       </ul>
     </div>
     </header>

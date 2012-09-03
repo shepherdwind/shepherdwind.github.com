@@ -57,8 +57,8 @@ joycss将自动拼图过程中，分为css输入、图片位置计算、图片�
 第7行除了有`line`参数外，还有`bottom=20`，对应标注图中2.3，下面留白20px，默认情
 况，bottom和right都是10px间距，如果3. 部分。上图中，还包含了右对齐(2.1)，水平方向
 平铺(2.2)。加上紧凑拼图和垂直拼图两者方式的一起使用，基本上就是joycss完整的功能了。
-最后看看生成的样式，完整的代码比较长，只放出一部分，完整的代码[[./demo/joycss/nongye/index.css|源文件]],
-[[./demo/joycss/nongye/index.sprite.css|sprite文件]]。
+最后看看生成的样式，完整的代码比较长，只放出一部分，完整的代码[[https://github.com/shepherdwind/shepherdwind.github.com/blob/master/demo/joycss/nongye/index.css|源文件]],
+[[https://github.com/shepherdwind/shepherdwind.github.com/blob/master/demo/joycss/nongye/index.sprite.css|sprite文件]]。
 
 {{{class="prettyprint linenums lang-css"
 .shop-tabs .tab-nav,
