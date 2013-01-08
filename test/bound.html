@@ -8,7 +8,7 @@
   <button id="run">get Position</button>
   <p id="status"></p>
   <div id='container' style='display:none;'>
-    <img id='t' />
+    <img id='t' src="http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif"/>
     <div id='t3'>sadfasdfasdf</div>
     <img src='http://img01.taobaocdn.com/tps/i1/T1vWgUXeXbXXb6hPny-500-190.png' id='t2' />
     <span id="t4"></span>
@@ -19,7 +19,7 @@
     var $ = function(i) { return document.getElementById(i); };
 
     function getPos(id){
-      return [$(id).getBoundingClientRect().left, $(id).getBoundingClientRect().top];
+      return [$(id).getBoundingClientRect().left, $(id).getBoundingClientRect().top, $(id).offsetWidth];
     }
 
     function run(){
@@ -31,7 +31,9 @@
         $('status').innerHTML = a.join('');
     }
 
-    $('run').onclick = run;
+    $('run').onclick = function() {
+      setTimeout(run, 100);
+    };
 
     var style = $('container').style.cssText;
     $('no-zoom').onclick = function(){
