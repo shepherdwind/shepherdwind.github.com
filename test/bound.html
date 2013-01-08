@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+  <button id="no-zoom">zoom</button>
+  <button id="run">get Position</button>
+  <p id="status"></p>
+  <div id='container' style='display:none;'>
+    <img id='t' />
+    <div id='t3'>sadfasdfasdf</div>
+    <img src='http://img01.taobaocdn.com/tps/i1/T1vWgUXeXbXXb6hPny-500-190.png' id='t2' />
+    <span id="t4"></span>
+  </div>
+  <img id='v' />
+  <script type="text/javascript">
+
+    var $ = function(i) { return document.getElementById(i); };
+
+    function getPos(id){
+      return [$(id).getBoundingClientRect().left, $(id).getBoundingClientRect().top];
+    }
+
+    function run(){
+      var a = ['t4:', getPos('t4'), '<br>']; 
+        a = a.concat(['container:', getPos('container'), '<br>']);
+        a = a.concat(['t:', getPos('t')], '<br>');
+        a = a.concat(['v:', getPos('v')], '<br>');
+        a = a.concat(['t3:', getPos('t3')]);
+        $('status').innerHTML = a.join('');
+    }
+
+    $('run').onclick = run;
+
+    var style = $('container').style.cssText;
+    $('no-zoom').onclick = function(){
+      if (this.innerHTML === 'zoom') {
+        this.innerHTML = 'no-zoom';
+        $('container').style.zoom = 1;
+      } else {
+        this.innerHTML = 'zoom';
+        $('container').style.cssText = style;
+      }
+    }
+  </script>
+</body>
+</html>
