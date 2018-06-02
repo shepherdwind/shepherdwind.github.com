@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport"content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    
+ <link rel="stylesheet" charset="utf-8" href="./game-19a94934ac59dc17ce28.css">
+
+  </head>
+  <body>
+  
+ <div id="main" class="main" ms-class-1="loading:loading"  ms-controller="lottery-ctrl">
+     <div style="display: none">
+    <img src="http://7xjnja.com1.z0.glb.clouddn.com/icon.jpg" >
+  </div>
+   <img ms-if="step < 3" class="photo bg" ms-attr-src="i1" width="100%"/>
+   <div ms-if="step < 3" class="photo center">
+     <img class="begin-title" ms-attr-src="i2" width="290"/>
+   </div>
+   <div ms-if="step === 1">
+     <img id="begin_mask" class="photo begin-mask" ms-attr-src="i3" width="100%"/>
+     <div class="photo car-pack">
+       <img class="pack-big" id="fly_pack" ms-attr-src="i4" width="100"/>
+       <img class="car" id="begin_car" ms-attr-src="i5" width="60%"/>
+     </div>
+   </div>
+   <div ms-if="step < 3" class="photo begin-btn-desc">
+     <img ms-if="step === 1" ms-on-tap="begin" class="begin-btn" ms-attr-src="i7" width="120" title="点击开始"/>
+     <img class="begin-desc" ms-attr-src="i8" width="300"/>
+   </div>
+   <div ms-if="step === 2" class="canvas" id="canvas">
+     <span class="dice" style="display:none;"></span>
+     <div class="hat"></div>
+     <div class="hat"></div>
+     <div class="hat"></div>
+     <h3 id="hat_pack_saying" class="hat-pack-saying">红包君在这里哦！</h3>
+   </div>
+   <div ms-if="step === 3" class="step-3">
+     <img class="step-3-bg" ms-attr-src="i14" width="100%"/>
+     <div ms-if="global_message" class="global-message" ms-html="global_message"></div>
+     <form class="step-3-form" action="" ms-on-submit="submit">
+       <div class="form-row">
+         <div class="form-title">
+           <label for="name">姓名</label>
+           <span class="error-text" ms-if="name_message"><span class="error-text-in" ms-html="name_message"> 姓名为长度大于2的中文</span></span>
+         </div>
+         <input class="form-text" type="text" ms-on-focus="hideerror" ms-duplex="name" name="name" id="name"/>
+       </div>
+       <div class="form-row">
+         <div class="form-title">
+           <label for="sex">姓别</label>
+           <span class="error-text" ms-if="sex_message"><span class="error-text-in" ms-html="sex_message"> 请选择性别</span></span>
+         </div>
+         <select class="sex" name="sex" id="sex" ms-duplex="sex" ms-on-focus="hideerror">
+             <option value="">请选择</option>
+             <option value="0">男</option>
+             <option value="1">女</option>
+         </select>
+       </div>
+       <div class="form-row">
+         <div class="form-title">
+           <label for="phone">电话</label>
+           <span class="error-text" ms-if="phone_message"><span class="error-text-in" ms-html="phone_message"> 电话格式不正确</span></span>
+         </div>
+         <input class="form-text" type="text" ms-on-focus="hideerror" ms-duplex="phone" name="phone" id="phone"/>
+       </div>
+       
+       <div class="form-row">
+         <div class="form-title">
+           <label for="car">现有车型</label>
+           <span class="error-text" ms-if="car_message"><span class="error-text-in" ms-html="car_message">请填写现有车型</span></span>
+         </div>
+         <input class="form-text" type="text" ms-on-focus="hideerror" ms-duplex="car" name="car" id="car"/>
+       </div>
+       <div class="form-row">
+         <div class="form-title">
+           <label for="car_new">意向车型</label>
+           <span class="error-text" ms-if="car_new_message"><span class="error-text-in" ms-html="car_new_message">请填写意向车型</span></span>
+         </div>
+         <input class="form-text" type="text" ms-on-focus="hideerror" ms-duplex="car_new" name="car_new" id="car_new"/>
+       </div>
+       <p class="form-submit"><input type="image" ms-attr-src="i15"/></p>
+     </form>
+   </div>
+   <div ms-if="step === 4" class="step-4">
+     <img class="step-4-bg" ms-attr-src="i16" width="100%"/>
+     <div class="step-4-des">
+       请于<span class="stress" ms-html="lotteryinfo.endtime"></span>前至<span class="stress" ms-html="lotteryinfo.address"></span>把红包君抱回家！
+       <br/>
+       您可以扫描以下二维码关注其微信公众帐号，或拨打销售热线与经销商取得联系！
+     </div>
+     <div class="step-4-main">
+       <span class="qr-code">
+         <img ms-attr-src="lotteryinfo.qrcode" width="150"/>
+       </span>
+       <div class="main-detail">
+         <div class="main-detail-row">
+           <label class="main-detail-label" >销售热线：</label>
+           <div class="main-detail-2" ms-html="lotteryinfo.tel"></div>
+         </div>
+         <div class="main-detail-row">
+           <label class="main-detail-label">地　　址：</label>
+           <div class="main-detail-2" ms-html="lotteryinfo.address_detail"></div>
+         </div>
+       </div>
+       <div class="step-4-ft" ms-on-tap="share">
+         <img ms-attr-src="i17" width="100%" title="分享到朋友圈"/>
+       </div>
+     </div>
+   </div>
+   <div ms-if="showShareGuide" class="share-guide" ms-class-1="active:showShareGuide" ms-on-tap="sharehide">
+     <div class="share-guide-detail">
+       <img src="http://7vzp49.com1.z0.glb.clouddn.com/arrow_weixin.png"/>
+     </div>
+     <p>猛戳右上角，分享到朋友圈</p>
+   </div>
+   <div class="mask" ms-if="mask > 0"></div>
+   <div ms-if="mask === 1" ms-class-1="active:mask === 1" class="overlay" ms-css-width="overlayWidth">
+     <div class="overlay-in" ms-css-width="overlayInWidth" ms-css-margin-left="overlayInLeft">
+       <img ms-attr-src="i13" width="100%"/>
+       <span class="overlay-close" ms-on-tap="closeMask"></span>
+       <p class="lottery-text" ms-css-width="overlayInWidth" ms-html="lottery_1_message"></p>
+       <img ms-on-tap="getPrizeBtn" ms-attr-src="i11"/>
+     </div>
+   </div>
+   <div ms-if="mask === 2" ms-class-1="active:mask === 2" class="overlay" ms-css-width="overlayWidth">
+     <div class="overlay-in" ms-css-width="overlayInWidth" ms-css-margin-left="overlayInLeft">
+       <img ms-attr-src="i10" width="100%"/>
+       <span class="overlay-close" ms-on-tap="closeMask"></span>
+       <p class="lottery-text" ms-css-width="overlayInWidth" ms-html="lottery_2_message"></p>
+       <img ms-on-tap="oncemore" class="overlay-btn" ms-attr-src="i9"/>       
+     </div>
+   </div>
+   <div ms-if="mask === 3" ms-class-1="active:mask === 3" class="overlay" ms-css-width="overlayWidth">
+     <div class="overlay-in" ms-css-width="overlayInWidth" ms-css-margin-left="overlayInLeft">
+       <img ms-attr-src="i12" width="100%"/>
+       <span class="overlay-close" ms-on-tap="closeMask"></span>
+       <p class="lottery-text" ms-css-width="overlayInWidth" ms-html="lottery_3_message"></p>
+       <img ms-on-tap="oncemore" class="overlay-btn" ms-attr-src="i9"/>
+     </div>
+   </div>
+   <div ms-if="loading === true" class="mask">
+     <span class="loading-gif"></span>
+   </div>
+ </div>
+
+
+  
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+ window.site_config = {
+   "uid" : 4
+ };
+</script>
+<script type="text/javascript" src="./game-19a94934ac59dc17ce28.js"></script>
+
+
+  </body>
+</html>
